@@ -1,508 +1,1001 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RugaOps — Professional Customer Support SOPs That Scale Your Business</title>
+<title>RugaOps — Turn Customer Support Into a System</title>
+<meta name="description" content="RugaOps helps small businesses build clear customer support processes, SOPs, workflows, and documentation. Book a consultation.">
+<link rel="icon" href="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#e6ecf0;--surface:#ffffff;--surface-warm:#f4f1eb;--ink:#001b5e;--ink-soft:#4b5678;--ink-faint:#7c85a0;
-    --line:rgba(0,27,94,0.09);--shadow-sm:0 8px 20px -12px rgba(0,27,94,0.18);--shadow-lg:0 30px 60px -30px rgba(0,27,94,0.28);
-    --radius:20px;--maxw:1180px;
-    --glow:#2fb8a3; /* teal spark — primary accent for this variant */
-    --glow-2:#ef8354; /* coral used only as a tiny counterpoint */
+    --bg:#e6ecf0;
+    --bg-alt:#f4f1eb;
+    --white:#ffffff;
+    --navy:#001b5e;
+    --navy-soft:#3c4f83;
+    --line:#c9d3de;
+    --accent:#2b57ff;
+    --accent-dark:#0032c9;
+    --shadow: 0 20px 45px -25px rgba(0,27,94,0.35);
+    --shadow-sm: 0 10px 24px -16px rgba(0,27,94,0.28);
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+    --maxw: 1180px;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:hidden;}
-  h1,h2,h3,h4{font-family:'Poppins',sans-serif;margin:0;color:var(--ink);letter-spacing:-0.01em;}
-  p{margin:0;color:var(--ink-soft);}
-  a{color:inherit;text-decoration:none;}
-  img{max-width:100%;display:block;}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;position:relative;z-index:1;}
-  section{padding:96px 0;position:relative;}
-  @media(max-width:720px){ section{padding:64px 0;} .wrap{padding:0 20px;} }
-
-  /* ============ HUD cursor ============ */
-  .cursor-dot,.cursor-ring,.cursor-glow{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);will-change:transform;}
-  .cursor-dot{width:5px;height:5px;border-radius:50%;background:var(--glow);opacity:0;box-shadow:0 0 8px 2px rgba(47,184,163,0.6);}
-  .cursor-ring{width:30px;height:30px;border-radius:50%;border:1.3px solid rgba(0,27,94,0.4);opacity:0;transition:width .25s ease,height .25s ease,border-color .25s ease,opacity .25s ease,transform .25s ease;}
-  .cursor-ring::before,.cursor-ring::after{content:'';position:absolute;background:rgba(47,184,163,0.7);}
-  .cursor-ring::before{top:50%;left:-8px;width:6px;height:1.2px;transform:translateY(-50%);}
-  .cursor-ring::after{top:-8px;left:50%;width:1.2px;height:6px;transform:translateX(-50%);}
-  .cursor-ring.big{width:58px;height:58px;border-color:rgba(47,184,163,0.55);background:rgba(47,184,163,0.07);transform:rotate(45deg);}
-  .cursor-glow{width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(47,184,163,0.10) 0%,rgba(47,184,163,0) 70%);opacity:0;transition:opacity .4s ease;}
-  body.has-cursor,body.has-cursor a,body.has-cursor button,body.has-cursor input{cursor:none;}
-  body.has-cursor .cursor-dot,body.has-cursor .cursor-ring,body.has-cursor .cursor-glow{opacity:1;}
-  @media(max-width:920px){ .cursor-dot,.cursor-ring,.cursor-glow{display:none !important;} body.has-cursor,body.has-cursor a,body.has-cursor button{cursor:auto;} }
-
-  /* ============ HUD grid floor (futuristic depth) ============ */
-  .grid-floor{
-    position:absolute;left:0;right:0;bottom:-40px;height:340px;z-index:0;pointer-events:none;
-    perspective:600px;overflow:hidden;
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--navy);
+    font-family:'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
-  .grid-floor .plane{
-    position:absolute;inset:0;transform:rotateX(72deg);
-    background-image:
-      repeating-linear-gradient(0deg, rgba(0,27,94,0.07) 0, rgba(0,27,94,0.07) 1px, transparent 1px, transparent 64px),
-      repeating-linear-gradient(90deg, rgba(0,27,94,0.07) 0, rgba(0,27,94,0.07) 1px, transparent 1px, transparent 64px);
-    -webkit-mask-image:linear-gradient(to top, black, transparent 85%);
-    mask-image:linear-gradient(to top, black, transparent 85%);
-    animation:floorMove 8s linear infinite;
+  h1,h2,h3,h4{
+    font-family:'Poppins', sans-serif;
+    color:var(--navy);
+    line-height:1.12;
+    margin:0 0 .5em;
+    letter-spacing:-0.01em;
   }
-  @keyframes floorMove{from{background-position:0 0,0 0;}to{background-position:0 64px,64px 0;}}
+  p{margin:0 0 1em; color:var(--navy-soft); line-height:1.65;}
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  section{padding:120px 0;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Inter'; font-weight:700; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent-dark); margin-bottom:18px;
+  }
+  .eyebrow::before{content:''; width:22px; height:2px; background:var(--accent); display:inline-block;}
 
-  .mesh-blob{position:fixed;border-radius:50%;filter:blur(60px);pointer-events:none;z-index:0;opacity:.3;}
-  .mesh-1{width:520px;height:520px;background:radial-gradient(circle,rgba(47,184,163,0.2),transparent 70%);top:-160px;right:-120px;}
-  .mesh-2{width:420px;height:420px;background:radial-gradient(circle,rgba(239,131,84,0.14),transparent 70%);top:50vh;left:-140px;}
+  /* ---------- reveal animation ---------- */
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  .reveal-stagger > *{opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal-stagger.in > *{opacity:1; transform:translateY(0);}
+  .reveal-stagger.in > *:nth-child(1){transition-delay:.03s;}
+  .reveal-stagger.in > *:nth-child(2){transition-delay:.11s;}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:.19s;}
+  .reveal-stagger.in > *:nth-child(4){transition-delay:.27s;}
+  .reveal-stagger.in > *:nth-child(5){transition-delay:.35s;}
+  .reveal-stagger.in > *:nth-child(6){transition-delay:.43s;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal, .reveal-stagger > *{opacity:1 !important; transform:none !important; transition:none !important;}
+    *{animation:none !important;}
+  }
 
-  header{position:sticky;top:0;z-index:100;background:rgba(230,236,240,0.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);opacity:0;transform:translateY(-14px);animation:dropIn .7s cubic-bezier(.2,.8,.2,1) .05s forwards;}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:var(--maxw);margin:0 auto;}
-  .brand{display:flex;align-items:center;gap:10px;font-family:'Poppins',sans-serif;font-weight:600;font-size:19px;}
-  .brand .mark{width:30px;height:30px;border-radius:9px;background:var(--ink);display:flex;align-items:center;justify-content:center;transition:transform .4s cubic-bezier(.2,.8,.2,1);position:relative;}
-  .brand .mark::after{content:'';position:absolute;inset:-4px;border-radius:12px;background:conic-gradient(var(--glow),transparent 30%,var(--glow-2),transparent 70%,var(--glow));opacity:0;filter:blur(6px);transition:opacity .3s ease;z-index:-1;animation:spin 4s linear infinite;}
-  .brand:hover .mark{transform:rotate(-14deg) scale(1.08);}
-  .brand:hover .mark::after{opacity:.55;}
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:'Inter'; font-weight:600; font-size:15px;
+    padding:14px 26px; border-radius:999px; cursor:pointer; text-decoration:none;
+    border:1px solid transparent; transition:transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color:#fff; box-shadow:var(--shadow-sm);
+  }
+  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 18px 30px -14px rgba(0,50,201,0.55);}
+  .btn-ghost{
+    background:transparent; border-color:var(--navy); color:var(--navy);
+  }
+  .btn-ghost:hover{background:var(--navy); color:#fff; transform:translateY(-3px);}
+  .btn-sm{padding:10px 18px; font-size:13.5px;}
+  .btn svg{transition:transform .25s ease;}
+  .btn:hover svg{transform:translateX(3px);}
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:200;
+    padding:20px 0; transition:padding .35s ease, background .35s ease, box-shadow .35s ease;
+  }
+  header.scrolled{
+    padding:12px 0; background:rgba(230,236,240,0.82); backdrop-filter:blur(14px);
+    box-shadow:0 8px 30px -20px rgba(0,27,94,0.4); border-bottom:1px solid rgba(0,27,94,0.08);
+  }
+  .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:24px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Poppins'; font-weight:700; font-size:19px; text-decoration:none;}
+  .brand img{width:34px; height:34px; object-fit:contain;}
+  nav.links{display:flex; align-items:center; gap:30px;}
+  nav.links a{
+    font-size:14.5px; font-weight:500; text-decoration:none; color:var(--navy-soft);
+    position:relative; padding:4px 0; transition:color .2s ease;
+  }
+  nav.links a::after{
+    content:''; position:absolute; left:0; bottom:-2px; width:0; height:2px; background:var(--accent);
+    transition:width .25s ease;
+  }
+  nav.links a:hover{color:var(--navy);}
+  nav.links a:hover::after{width:100%;}
+  .nav-cta{display:flex; align-items:center; gap:14px;}
+  .burger{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px;}
+  .burger span{width:24px; height:2px; background:var(--navy); border-radius:2px; transition:transform .3s ease, opacity .3s ease;}
+  .mobile-menu{
+    position:fixed; inset:0 0 0 auto; width:min(320px,80vw); background:var(--white); z-index:300;
+    padding:100px 30px 30px; transform:translateX(100%); transition:transform .4s cubic-bezier(.2,.8,.2,1);
+    box-shadow:-20px 0 40px -20px rgba(0,27,94,0.3);
+  }
+  .mobile-menu.open{transform:translateX(0);}
+  .mobile-menu a{display:block; font-size:17px; font-weight:600; padding:14px 0; text-decoration:none; color:var(--navy); border-bottom:1px solid var(--line);}
+  .scrim{position:fixed; inset:0; background:rgba(0,27,94,0.35); z-index:250; opacity:0; pointer-events:none; transition:opacity .35s ease;}
+  .scrim.open{opacity:1; pointer-events:auto;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:190px 0 120px; position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:''; position:absolute; top:-180px; right:-160px; width:560px; height:560px; border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(43,87,255,0.16), rgba(43,87,255,0) 70%);
+  }
+  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:60px; align-items:center;}
+  .hero h1{font-size:clamp(38px,5vw,60px); font-weight:700;}
+  .hero p.lead{font-size:18px; max-width:520px;}
+  .hero-actions{display:flex; gap:16px; flex-wrap:wrap; margin-top:32px;}
+
+  /* hero visual: floating document mockups */
+  .hero-visual{position:relative; height:460px;}
+  .doc-card{
+    position:absolute; background:var(--white); border-radius:var(--radius-md); box-shadow:var(--shadow);
+    padding:20px 22px; border:1px solid rgba(0,27,94,0.06);
+  }
+  .doc-1{width:290px; top:0; left:10px; animation:float1 7s ease-in-out infinite;}
+  .doc-2{width:270px; top:150px; left:190px; animation:float2 8s ease-in-out infinite;}
+  .doc-3{width:250px; top:300px; left:20px; animation:float3 6.5s ease-in-out infinite;}
+  @keyframes float1{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-14px) rotate(-1deg);}}
+  @keyframes float2{0%,100%{transform:translateY(0) rotate(2deg);}50%{transform:translateY(12px) rotate(4deg);}}
+  @keyframes float3{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-10px) rotate(-4deg);}}
+  .doc-card .tag{font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-dark); margin-bottom:10px;}
+  .doc-line{height:8px; border-radius:4px; background:var(--bg); margin-bottom:8px;}
+  .doc-line.w1{width:92%;} .doc-line.w2{width:70%;} .doc-line.w3{width:82%;} .doc-line.w4{width:55%;}
+  .doc-card .doc-title{font-family:'Poppins'; font-weight:700; font-size:14px; margin-bottom:12px; color:var(--navy);}
+  .kpi-row{display:flex; justify-content:space-between; font-size:11.5px; padding:6px 0; border-bottom:1px dashed var(--line); color:var(--navy-soft);}
+  .kpi-row b{color:var(--navy);}
+  .flow-step{display:flex; align-items:center; gap:8px; font-size:11.5px; margin-bottom:8px; color:var(--navy-soft);}
+  .flow-dot{width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none;}
+
+  /* ---------- problem section ---------- */
+  .problem{background:var(--white);}
+  .problem-head{max-width:640px; margin:0 auto 56px; text-align:center;}
+  .problem-head h2{font-size:clamp(28px,3.4vw,40px);}
+  .problem-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .problem-card{
+    background:var(--bg); border-radius:var(--radius-md); padding:28px 24px; border:1px solid transparent;
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .problem-card:hover{transform:translateY(-6px); box-shadow:var(--shadow-sm); border-color:rgba(43,87,255,0.18);}
+  .problem-card .num{font-family:'Poppins'; font-weight:700; color:var(--accent); font-size:13px; margin-bottom:12px;}
+  .problem-card p{margin:0; color:var(--navy); font-weight:500; font-size:15.5px;}
+  .problem-close{text-align:center; max-width:620px; margin:50px auto 0; font-size:17px; font-style:italic; color:var(--navy);}
+
+  /* ---------- services preview ---------- */
+  .services-preview{background:var(--bg);}
+  .section-head{max-width:640px; margin:0 auto 56px; text-align:center;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px);}
+  .card-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .service-card{
+    background:var(--white); border-radius:var(--radius-lg); padding:30px 26px; box-shadow:var(--shadow-sm);
+    transition:transform .35s ease, box-shadow .35s ease; position:relative; overflow:hidden;
+  }
+  .service-card::before{
+    content:''; position:absolute; inset:0; opacity:0; background:linear-gradient(135deg, rgba(43,87,255,0.06), transparent 60%);
+    transition:opacity .3s ease;
+  }
+  .service-card:hover{transform:translateY(-8px); box-shadow:var(--shadow);}
+  .service-card:hover::before{opacity:1;}
+  .service-card h3{font-size:19px; margin-bottom:6px;}
+  .price{display:inline-block; font-weight:700; color:var(--accent-dark); font-size:15px; margin-bottom:14px;}
+  .service-card p{font-size:14.5px; margin-bottom:0;}
+  .center-btn{text-align:center; margin-top:46px;}
+
+  /* what I do */
+  .whatido{background:var(--white);}
+  .whatido-inner{display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:center;}
+  .whatido h2{font-size:clamp(26px,3.2vw,36px);}
+  .compare{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .compare-col{border-radius:var(--radius-md); padding:26px 22px;}
+  .compare-col.no{background:#f3eee7; border:1px solid #e3d9c8;}
+  .compare-col.yes{background:var(--navy); color:#fff;}
+  .compare-col h4{font-family:'Poppins'; font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:16px;}
+  .compare-col.no h4{color:#8a6a3a;}
+  .compare-col.yes h4{color:#9fb4ff;}
+  .compare-col ul{list-style:none; margin:0; padding:0;}
+  .compare-col li{font-size:14.5px; padding:8px 0 8px 22px; position:relative; color:var(--navy-soft);}
+  .compare-col.yes li{color:#e6ecf8;}
+  .compare-col.no li::before{content:'—'; position:absolute; left:0; color:#a98552;}
+  .compare-col.yes li::before{content:'✓'; position:absolute; left:0; color:#7fa0ff; font-weight:700;}
+
+  /* ---------- full services / pricing ---------- */
+  .services-full{background:var(--bg);}
+  .pricing-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
+  .pricing-card{
+    background:var(--white); border-radius:var(--radius-lg); padding:34px 30px; box-shadow:var(--shadow-sm);
+    transition:transform .3s ease, box-shadow .3s ease; display:flex; flex-direction:column;
+  }
+  .pricing-card:hover{transform:translateY(-6px); box-shadow:var(--shadow);}
+  .pricing-card.featured{
+    background:linear-gradient(160deg, var(--navy), #012a86); color:#fff; grid-column:span 2;
+    position:relative;
+  }
+  .pricing-card.featured::after{
+    content:'Most Complete'; position:absolute; top:24px; right:30px; background:var(--accent);
+    color:#fff; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    padding:7px 14px; border-radius:999px;
+  }
+  .pricing-card.featured h3, .pricing-card.featured .price{color:#fff;}
+  .pricing-card.featured p{color:#c9d5f5;}
+  .pricing-card.featured li{color:#dbe3fa;}
+  .pricing-card h3{font-size:21px; margin-bottom:4px;}
+  .pricing-card .price{font-size:16px; margin-bottom:8px;}
+  .pricing-card > p.desc{font-size:14.5px; margin-bottom:18px;}
+  .pricing-card ul{list-style:none; margin:0 0 22px; padding:0; flex:1;}
+  .pricing-card li{font-size:14px; padding:6px 0 6px 22px; position:relative; color:var(--navy-soft);}
+  .pricing-card li::before{content:'✓'; position:absolute; left:0; color:var(--accent); font-weight:700;}
+  .pricing-card .addon{font-size:12.5px; color:var(--navy-soft); font-style:italic; margin-bottom:16px;}
+  .pricing-note{text-align:center; font-size:13.5px; color:var(--navy-soft); margin-top:36px; font-style:italic;}
+  .custom-cta{
+    margin-top:24px; grid-column:span 2; background:var(--bg-alt); border-radius:var(--radius-lg);
+    padding:36px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+    border:1px solid #e6dfd0;
+  }
+  .custom-cta h3{margin-bottom:6px; font-size:20px;}
+  .custom-cta p{margin:0; max-width:520px; font-size:14.5px;}
+
+  /* ---------- how it works ---------- */
+  .how{background:var(--white);}
+  .steps{display:grid; grid-template-columns:repeat(5,1fr); gap:18px; counter-reset:step;}
+  .step{position:relative; padding:26px 18px 20px; border-radius:var(--radius-md); background:var(--bg); text-align:left;
+        transition:transform .3s ease, background .3s ease;}
+  .step:hover{transform:translateY(-6px); background:#dbe6ee;}
+  .step .step-num{font-family:'Poppins'; font-weight:800; font-size:30px; color:var(--accent); opacity:.7; margin-bottom:14px;}
+  .step h4{font-size:16px; margin-bottom:8px;}
+  .step p{font-size:13.5px; margin:0;}
+  .steps-line{position:relative; height:2px; background:var(--line); margin-bottom:-2px;}
+
+  /* ---------- coaching ---------- */
+  .coaching{background:var(--bg-alt);}
+  .coaching-inner{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  .coaching h2{font-size:clamp(26px,3.2vw,36px);}
+  .topics{display:flex; flex-wrap:wrap; gap:10px; margin:22px 0 0;}
+  .topic-pill{
+    font-size:13px; font-weight:600; padding:9px 16px; border-radius:999px; background:var(--white);
+    border:1px solid #e6dfd0; color:var(--navy); transition:transform .25s ease, background .25s ease;
+  }
+  .topic-pill:hover{transform:translateY(-3px); background:var(--navy); color:#fff;}
+  .process-col{background:var(--white); border-radius:var(--radius-lg); padding:30px; box-shadow:var(--shadow-sm);}
+  .process-block{margin-bottom:20px;}
+  .process-block:last-child{margin-bottom:0;}
+  .process-block h4{font-size:14px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent-dark); margin-bottom:8px;}
+  .process-block ul{margin:0; padding-left:18px; font-size:14px; color:var(--navy-soft);}
+  .process-block li{margin-bottom:4px;}
+
+  /* ---------- about ---------- */
+  .about{background:var(--white);}
+  .about-inner{display:grid; grid-template-columns:0.85fr 1.15fr; gap:56px; align-items:center;}
+  .about-photo{
+    aspect-ratio:4/5; border-radius:var(--radius-lg); background:linear-gradient(160deg,#dbe4ee,#c7d5e3);
+    display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; box-shadow:var(--shadow-sm);
+  }
+  .about-photo img{width:64px; height:64px; opacity:.5;}
+  .about-photo .ring{position:absolute; width:220px; height:220px; border-radius:50%; border:2px dashed rgba(0,27,94,0.18); animation:spin 30s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
-  .brand .mark svg{width:16px;height:16px;}
-  .navlinks{display:flex;gap:34px;list-style:none;margin:0;padding:0;}
-  .navlinks a{font-size:14.5px;font-weight:500;color:var(--ink-soft);transition:color .18s;position:relative;}
-  .navlinks a::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:1.4px;background:linear-gradient(90deg,var(--ink),var(--glow));transition:width .25s ease;}
-  .navlinks a:hover{color:var(--ink);}
-  .navlinks a:hover::after{width:100%;}
-  .navcta{display:flex;align-items:center;gap:14px;}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:600;font-size:14.5px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease,box-shadow .25s ease,background .2s ease;white-space:nowrap;position:relative;}
-  .btn-primary{background:var(--ink);color:#fff;box-shadow:var(--shadow-sm);}
-  .btn-primary:hover{box-shadow:0 20px 40px -14px rgba(47,184,163,0.4);}
-  .btn-ghost{background:transparent;color:var(--ink);border-color:rgba(0,27,94,0.22);}
-  .btn-ghost:hover{background:rgba(0,27,94,0.05);}
-  .btn-sm{padding:9px 18px;font-size:13.5px;}
-  .navToggle{display:none;background:none;border:none;cursor:pointer;padding:6px;}
-  @media(max-width:920px){ .navlinks{display:none;} .navToggle{display:block;} }
+  .about h2{font-size:clamp(26px,3.2vw,38px);}
+  .about .kicker{font-family:'Poppins'; font-weight:600; color:var(--accent-dark); margin-bottom:6px; font-size:14px;}
 
-  @keyframes dropIn{to{opacity:1;transform:translateY(0);}}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
-
-  .hero{padding:88px 0 110px;overflow:hidden;}
-  .hero .wrap{display:grid;grid-template-columns:1.05fr 0.95fr;gap:64px;align-items:center;}
-  @media(max-width:960px){ .hero .wrap{grid-template-columns:1fr;} }
-  .load-in{opacity:0;transform:translateY(22px);animation:fadeUp .8s cubic-bezier(.2,.8,.2,1) forwards;}
-  .load-in.d1{animation-delay:.15s;} .load-in.d2{animation-delay:.3s;} .load-in.d3{animation-delay:.45s;} .load-in.d4{animation-delay:.6s;}
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--surface-warm);border:1px solid var(--line);padding:7px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:22px;}
-  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--glow);animation:pulse 2.2s ease-in-out infinite;box-shadow:0 0 10px 2px rgba(47,184,163,0.5);}
-  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.4);}}
-  h1.headline{font-size:50px;line-height:1.08;font-weight:600;}
-  @media(max-width:640px){ h1.headline{font-size:34px;} }
-  .hero p.sub{font-size:17.5px;margin-top:22px;max-width:520px;color:var(--ink-soft);}
-  .hero-ctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
-  .hero-proof{display:flex;gap:28px;margin-top:46px;flex-wrap:wrap;}
-  .proof-item{font-size:13px;color:var(--ink-faint);font-weight:500;}
-  .proof-item b{display:block;font-family:'Poppins',sans-serif;font-size:22px;color:var(--ink);font-weight:600;}
-  .magnetic{will-change:transform;}
-
-  /* ---- Orbit dashboard hero visual ---- */
-  .orbit-wrap{position:relative;width:100%;max-width:420px;margin:0 auto;perspective:1200px;}
-  .orbit-stage{position:relative;width:100%;padding-top:100%;transform-style:preserve-3d;}
-  .orbit-core{
-    position:absolute;top:50%;left:50%;width:56%;height:56%;transform:translate(-50%,-50%);
-    background:var(--surface);border-radius:50%;box-shadow:var(--shadow-lg), inset 0 0 0 1px var(--line);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;z-index:2;
+  /* ---------- resources ---------- */
+  .resources{background:var(--bg);}
+  .res-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .res-card{
+    background:var(--white); border-radius:var(--radius-md); padding:24px; box-shadow:var(--shadow-sm);
+    transition:transform .3s ease, box-shadow .3s ease; position:relative;
   }
-  .orbit-core .big-num{font-family:'Poppins',sans-serif;font-weight:700;font-size:30px;color:var(--ink);}
-  .orbit-core .lbl{font-size:11.5px;color:var(--ink-faint);font-weight:600;text-align:center;max-width:120px;}
-  .orbit-ring{position:absolute;top:50%;left:50%;border-radius:50%;border:1px dashed rgba(0,27,94,0.18);transform:translate(-50%,-50%);}
-  .orbit-ring.r1{width:78%;height:78%;animation:spin 22s linear infinite;}
-  .orbit-ring.r2{width:100%;height:100%;animation:spin 32s linear infinite reverse;}
-  .orbit-node{
-    position:absolute;width:52px;height:52px;border-radius:14px;background:var(--surface);
-    border:1px solid var(--line);box-shadow:var(--shadow-sm);
-    display:flex;align-items:center;justify-content:center;z-index:3;
+  .res-card:hover{transform:translateY(-6px); box-shadow:var(--shadow);}
+  .res-tag{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--accent-dark); margin-bottom:10px; display:block;}
+  .res-card h4{font-size:16px; margin-bottom:0;}
+  .res-soon{
+    text-align:center; margin-top:44px; font-size:14px; color:var(--navy-soft); font-style:italic;
   }
-  .orbit-node svg{width:22px;height:22px;color:var(--ink);}
-  .orbit-node.n-a{top:2%;left:50%;transform:translate(-50%,0);background:linear-gradient(150deg,#fff,var(--surface-warm));}
-  .orbit-node.n-b{top:50%;right:-2%;transform:translate(0,-50%);}
-  .orbit-node.n-c{bottom:2%;left:50%;transform:translate(-50%,0);}
-  .orbit-node.n-d{top:50%;left:-2%;transform:translate(0,-50%);}
-  .orbit-node.n-a svg{color:var(--glow);}
-  .orbit-node.n-c svg{color:var(--glow-2);}
 
-  .float-chip{position:absolute;background:var(--surface-warm);border:1px solid var(--line);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow-sm);font-size:12.5px;font-weight:600;color:var(--ink);z-index:4;display:flex;align-items:center;gap:8px;animation:floaty 5s ease-in-out infinite;}
-  .chip-1{top:6%;right:-8%;animation-delay:.2s;}
-  .chip-2{bottom:8%;left:-10%;animation-delay:1.1s;}
-  @keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
-  @media(max-width:960px){ .chip-1,.chip-2{display:none;} }
+  /* ---------- final cta ---------- */
+  .final-cta{
+    background:linear-gradient(135deg, var(--navy), #012a86); color:#fff; text-align:center; border-radius:var(--radius-lg);
+    margin:0 28px; padding:80px 40px; position:relative; overflow:hidden;
+  }
+  .final-cta::before{
+    content:''; position:absolute; width:500px; height:500px; border-radius:50%; top:-250px; right:-150px;
+    background:radial-gradient(circle, rgba(43,87,255,0.4), transparent 70%);
+  }
+  .final-cta h2{color:#fff; font-size:clamp(28px,3.6vw,42px); position:relative;}
+  .final-cta p{color:#c9d5f5; max-width:520px; margin:0 auto 30px; position:relative;}
+  .final-cta .btn-primary{position:relative;}
 
-  .section-head{max-width:620px;margin:0 auto 52px;text-align:center;}
-  .section-head .kicker{display:block;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#2f8a7a;margin-bottom:12px;}
-  .section-head h2{font-size:34px;font-weight:600;}
-  @media(max-width:640px){ .section-head h2{font-size:26px;} }
-  .section-head p{margin-top:14px;font-size:16px;}
+  /* ---------- contact ---------- */
+  .contact{background:var(--white);}
+  .contact-inner{display:grid; grid-template-columns:0.8fr 1.2fr; gap:56px;}
+  .contact h2{font-size:clamp(26px,3.2vw,38px);}
+  .contact-info-item{display:flex; gap:14px; margin-bottom:22px; align-items:flex-start;}
+  .contact-info-item .dot{width:10px; height:10px; border-radius:50%; background:var(--accent); margin-top:6px; flex:none;}
+  .contact-info-item h4{font-size:15px; margin-bottom:4px;}
+  .contact-info-item p{font-size:14px; margin:0;}
+  form.contact-form{background:var(--bg); border-radius:var(--radius-lg); padding:36px; box-shadow:var(--shadow-sm);}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;}
+  .form-field{display:flex; flex-direction:column; gap:6px;}
+  .form-field.full{grid-column:1/-1;}
+  .form-field label{font-size:12.5px; font-weight:700; letter-spacing:.03em; color:var(--navy-soft); text-transform:uppercase;}
+  .form-field input, .form-field select, .form-field textarea{
+    font-family:'Inter'; font-size:14.5px; padding:12px 14px; border-radius:10px; border:1px solid var(--line);
+    background:var(--white); color:var(--navy); transition:border-color .25s ease, box-shadow .25s ease; outline:none;
+  }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus{
+    border-color:var(--accent); box-shadow:0 0 0 4px rgba(43,87,255,0.14);
+  }
+  .form-field textarea{resize:vertical; min-height:100px;}
+  .form-submit{display:flex; align-items:center; gap:16px; margin-top:8px;}
+  .form-note{font-size:12.5px; color:var(--navy-soft);}
+  .form-status{font-size:14px; font-weight:600; margin-top:14px; display:none;}
+  .form-status.show{display:block;}
+  .form-status.ok{color:#0a7a3d;}
+  .form-status.err{color:#b3261e;}
+  .btn-primary[disabled]{opacity:.65; cursor:progress; transform:none;}
 
-  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
-  @media(max-width:960px){ .grid-4{grid-template-columns:repeat(2,1fr);} }
-  @media(max-width:560px){ .grid-4{grid-template-columns:1fr;} }
-  .product-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .25s ease;transform-style:preserve-3d;will-change:transform;}
-  .product-card:hover{box-shadow:0 30px 60px -24px rgba(47,184,163,0.28), var(--shadow-lg);}
-  .product-cover{height:150px;background:var(--surface-warm);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-  .product-cover svg{width:46px;height:46px;color:var(--ink);opacity:.75;transition:transform .4s cubic-bezier(.2,.8,.2,1);}
-  .product-card:hover .product-cover svg{transform:scale(1.15) rotate(-6deg);}
-  .product-body{padding:20px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1;}
-  .product-body h4{font-size:16px;font-weight:600;}
-  .product-body p{font-size:13.5px;}
-  .product-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px;}
-  .price{font-family:'Poppins',sans-serif;font-weight:600;font-size:17px;color:var(--ink);}
-  .link-arrow{font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:5px;}
-  .link-arrow svg{width:13px;height:13px;transition:transform .18s ease;}
-  .product-card:hover .link-arrow svg{transform:translateX(3px);}
+  /* ---------- footer ---------- */
+  footer{background:var(--navy); color:#c9d5f5; padding:60px 0 30px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px;}
+  .footer-brand{display:flex; align-items:center; gap:10px; font-family:'Poppins'; font-weight:700; font-size:18px; color:#fff; margin-bottom:14px;}
+  .footer-brand img{width:30px; height:30px;}
+  footer p{color:#9fb0d9; font-size:13.5px;}
+  footer h5{font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#7f94c8; margin-bottom:16px;}
+  footer ul{list-style:none; margin:0; padding:0;}
+  footer li{margin-bottom:10px;}
+  footer a{font-size:14px; color:#c9d5f5; text-decoration:none; transition:color .2s ease;}
+  footer a:hover{color:#fff;}
+  .social-row{display:flex; gap:12px; margin-top:6px;}
+  .social-row a{
+    width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,0.2);
+    display:flex; align-items:center; justify-content:center; font-size:13px; transition:background .25s ease, transform .25s ease;
+  }
+  .social-row a:hover{background:var(--accent); transform:translateY(-3px); border-color:var(--accent);}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,0.12); padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  .footer-bottom p{margin:0; font-size:12.5px;}
 
-  /* ============ Why RugaOps — 3D flip cards ============ */
-  .why-section{background:var(--surface-warm);border-radius:36px;margin:0 32px;}
-  @media(max-width:640px){ .why-section{margin:0 12px;border-radius:24px;} }
-  .grid-4b{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
-  @media(max-width:960px){ .grid-4b{grid-template-columns:repeat(2,1fr);} }
-  @media(max-width:560px){ .grid-4b{grid-template-columns:1fr;} }
-  .flip-card{perspective:1000px;height:190px;}
-  .flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,.8,.2,1);}
-  .flip-card:hover .flip-inner{transform:rotateY(180deg);}
-  .flip-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;padding:24px 20px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;}
-  .flip-front .feature-icon{width:42px;height:42px;border-radius:11px;background:var(--bg);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
-  .flip-front .feature-icon svg{width:20px;height:20px;color:var(--ink);}
-  .flip-front h4{font-size:16px;font-weight:600;margin-bottom:8px;}
-  .flip-front p{font-size:13.5px;}
-  .flip-back{transform:rotateY(180deg);background:var(--ink);color:#fff;justify-content:center;}
-  .flip-back p{color:rgba(255,255,255,0.85);font-size:13.5px;}
-  .flip-back .tag{font-size:11px;font-weight:600;color:var(--glow);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;}
-
-  .grid-cat{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
-  @media(max-width:960px){ .grid-cat{grid-template-columns:repeat(2,1fr);} }
-  @media(max-width:560px){ .grid-cat{grid-template-columns:1fr;} }
-  .cat-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;align-items:center;gap:14px;transition:border-color .18s ease,transform .18s ease;}
-  .cat-card:hover{border-color:rgba(47,184,163,0.5);transform:translateY(-4px);}
-  .cat-card .ic{width:38px;height:38px;border-radius:10px;background:var(--surface-warm);display:flex;align-items:center;justify-content:center;flex:none;transition:transform .3s ease;}
-  .cat-card:hover .ic{transform:scale(1.1) rotate(-6deg);}
-  .cat-card .ic svg{width:18px;height:18px;color:var(--ink);}
-  .cat-card span{font-size:14.5px;font-weight:600;}
-
-  .steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
-  @media(max-width:800px){ .steps-row{grid-template-columns:1fr;} }
-  .step{position:relative;padding:32px 26px;background:var(--surface);border-radius:18px;border:1px solid var(--line);transition:transform .3s ease,box-shadow .3s ease;}
-  .step:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);}
-  .step .num{font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;color:#2f8a7a;display:block;margin-bottom:14px;}
-  .step h4{font-size:18px;margin-bottom:10px;}
-  .step p{font-size:14px;}
-  .step-line{position:absolute;top:38px;left:100%;width:28px;height:1px;background:var(--line);}
-  @media(max-width:800px){ .step-line{display:none;} }
-
-  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
-  @media(max-width:880px){ .grid-3{grid-template-columns:1fr;} }
-  .quote-card{background:var(--surface);border-radius:18px;padding:26px;border:1px solid var(--line);display:flex;flex-direction:column;gap:16px;transition:transform .3s ease,box-shadow .3s ease;}
-  .quote-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
-  .stars{display:flex;gap:3px;color:#c8823c;font-size:13px;letter-spacing:2px;}
-  .quote-card p.q{font-size:14.5px;color:var(--ink);line-height:1.6;}
-  .who{display:flex;align-items:center;gap:11px;margin-top:auto;}
-  .avatar{width:36px;height:36px;border-radius:50%;background:var(--surface-warm);display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-weight:600;font-size:13px;color:var(--ink);}
-  .who-name{font-size:13.5px;font-weight:600;color:var(--ink);}
-  .who-role{font-size:12px;color:var(--ink-faint);}
-
-  .signup-panel{background:var(--ink);border-radius:32px;padding:64px 56px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;color:#fff;position:relative;overflow:hidden;}
-  .signup-panel::before{content:'';position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(47,184,163,0.22),transparent 70%);top:-140px;right:-100px;}
-  .signup-panel::after{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(239,131,84,0.14),transparent 70%);bottom:-130px;left:-70px;}
-  @media(max-width:860px){ .signup-panel{grid-template-columns:1fr;padding:44px 28px;} }
-  .signup-panel h2{color:#fff;font-size:30px;font-weight:600;}
-  .signup-panel p{color:rgba(255,255,255,0.72);margin-top:14px;font-size:15px;max-width:440px;}
-  .signup-form{display:flex;gap:10px;flex-wrap:wrap;}
-  .signup-form input{flex:1;min-width:200px;padding:14px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.08);color:#fff;font-size:14.5px;font-family:'Inter',sans-serif;}
-  .signup-form input::placeholder{color:rgba(255,255,255,0.5);}
-  .signup-form .btn-primary{background:var(--surface-warm);color:var(--ink);}
-  .signup-note{font-size:12px;color:rgba(255,255,255,0.5);margin-top:12px;}
-
-  footer{padding:64px 0 36px;border-top:1px solid var(--line);}
-  .foot-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:32px;margin-bottom:48px;}
-  @media(max-width:860px){ .foot-grid{grid-template-columns:repeat(2,1fr);} }
-  @media(max-width:520px){ .foot-grid{grid-template-columns:1fr;} }
-  .foot-col h5{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:16px;letter-spacing:.02em;}
-  .foot-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;}
-  .foot-col a{font-size:13.5px;color:var(--ink-soft);}
-  .foot-col a:hover{color:var(--ink);}
-  .foot-social{display:flex;gap:12px;margin-top:6px;}
-  .foot-social a{width:32px;height:32px;border-radius:50%;background:var(--surface-warm);display:flex;align-items:center;justify-content:center;transition:transform .25s ease;}
-  .foot-social a:hover{transform:translateY(-3px);}
-  .foot-social svg{width:14px;height:14px;color:var(--ink);}
-  .foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-faint);flex-wrap:wrap;gap:14px;}
-
-  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1);}
-  .reveal.in{opacity:1;transform:translateY(0);}
-  @media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important;} }
+  /* ---------- responsive ---------- */
+  @media (max-width:1000px){
+    nav.links{display:none;}
+    .burger{display:flex;}
+    .hero-grid, .whatido-inner, .coaching-inner, .about-inner, .contact-inner{grid-template-columns:1fr;}
+    .problem-grid, .card-grid, .pricing-grid, .res-grid{grid-template-columns:repeat(2,1fr);}
+    .steps{grid-template-columns:repeat(2,1fr);}
+    .hero-visual{height:380px; margin-top:20px;}
+    .pricing-card.featured, .custom-cta{grid-column:span 2;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:640px){
+    section{padding:80px 0;}
+    .problem-grid, .card-grid, .pricing-grid, .res-grid, .steps{grid-template-columns:1fr;}
+    .pricing-card.featured, .custom-cta{grid-column:span 1;}
+    .form-row{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .final-cta{margin:0 16px; padding:56px 24px;}
+    .custom-cta{flex-direction:column; align-items:flex-start;}
+  }
 </style>
 </head>
 <body>
 
-<div class="cursor-glow" id="cursorGlow"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="mesh-blob mesh-1" id="mesh1"></div>
-<div class="mesh-blob mesh-2" id="mesh2"></div>
+<div class="scrim" id="scrim"></div>
 
-<header>
-  <nav class="nav">
-    <div class="brand"><span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5L9.5 17L19 7" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>RugaOps</div>
-    <ul class="navlinks">
-      <li><a href="#top">Home</a></li>
-      <li><a href="#products">SOP Library</a></li>
-      <li><a href="#categories">Templates</a></li>
-      <li><a href="#resources">Resources</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#resources">Articles</a></li>
-      <li><a href="#footer">Contact</a></li>
-    </ul>
-    <div class="navcta">
-      <a class="btn btn-ghost btn-sm magnetic" href="#resources">Download Free SOP</a>
-      <a class="btn btn-primary btn-sm magnetic" href="#products">Browse SOPs</a>
+<header id="site-header">
+  <div class="wrap nav-inner">
+    <a href="#hero" class="brand"><img src="assets/logo.png" alt="RugaOps logo"> RugaOps</a>
+    <nav class="links">
+      <a href="#hero">Home</a>
+      <a href="#services">Services</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#resources">Resources</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary btn-sm">Book a Consultation</a>
+      <button class="burger" id="burger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </nav>
+  </div>
 </header>
 
-<main id="top">
-  <section class="hero">
-    <div class="grid-floor"><div class="plane"></div></div>
-    <div class="wrap">
-      <div>
-        <span class="eyebrow load-in d1"><span class="dot"></span> Built by CX operators, not marketers</span>
-        <h1 class="headline load-in d2">Professional Customer Support SOPs That Scale Your Business</h1>
-        <p class="sub load-in d3">RugaOps gives e-commerce support teams ready-to-use SOPs, workflows, templates and checklists — so every refund, return and Shopify escalation gets handled the same way, every time.</p>
-        <div class="hero-ctas load-in d4">
-          <a class="btn btn-primary magnetic" href="#products">Browse SOPs</a>
-          <a class="btn btn-ghost magnetic" href="#resources">Get a Free SOP</a>
-        </div>
-        <div class="hero-proof load-in d4">
-          <div class="proof-item"><b class="counter" data-target="1200">0</b>teams equipped</div>
-          <div class="proof-item"><b class="counter" data-target="38">0</b>ready-made SOPs</div>
-          <div class="proof-item"><b class="counter-decimal" data-target="4.9">0.0</b>average rating</div>
-        </div>
-      </div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#hero">Home</a>
+  <a href="#services">Services</a>
+  <a href="#how-it-works">How It Works</a>
+  <a href="#resources">Resources</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+  <a href="#contact" class="btn btn-primary" style="margin-top:24px; width:100%; border:none;">Book a Consultation</a>
+</div>
 
-      <div class="load-in d3">
-        <div class="orbit-wrap" id="orbitWrap">
-          <div class="float-chip chip-1">⏱ Saves ~6 hrs/week</div>
-          <div class="orbit-stage" id="orbitStage">
-            <div class="orbit-ring r2"></div>
-            <div class="orbit-ring r1"></div>
-            <div class="orbit-core">
-              <span class="big-num">38</span>
-              <span class="lbl">SOPs running your support desk</span>
-            </div>
-            <div class="orbit-node n-a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 14l-4-4 4-4M5 10h14"/></svg></div>
-            <div class="orbit-node n-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M16 3l-4 4-4-4"/></svg></div>
-            <div class="orbit-node n-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-            <div class="orbit-node n-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2l1.5 5M18 2l-1.5 5M6 7h12l-1 13H7L6 7z"/></svg></div>
-          </div>
-          <div class="float-chip chip-2">✓ Consistent every time</div>
-        </div>
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <div class="eyebrow">Customer Support Operations</div>
+      <h1>Turn Customer Support Into a System.</h1>
+      <p class="lead">RugaOps helps small businesses build clear customer support processes, practical SOPs, workflows, and documentation — so their teams can spend less time dealing with support chaos and more time solving customer problems.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Book a Consultation
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#services" class="btn btn-ghost">View Services</a>
       </div>
     </div>
-  </section>
-
-  <section id="products">
-    <div class="wrap">
-      <div class="section-head reveal"><span class="kicker">SOP Library</span><h2>Our most-used SOPs</h2><p>Battle-tested documentation your team can implement this afternoon.</p></div>
-      <div class="grid-4">
-        <div class="product-card reveal tilt">
-          <div class="product-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 14l-4-4 4-4M5 10h14"/></svg></div>
-          <div class="product-body"><h4>Refund &amp; Chargeback SOP</h4><p>Step-by-step process for evaluating, approving and logging refund requests.</p>
-          <div class="product-foot"><span class="price">€29</span><a class="link-arrow" href="#">View details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
-        </div>
-        <div class="product-card reveal tilt">
-          <div class="product-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96L12 12l8.73-5.04M12 22.08V12"/></svg></div>
-          <div class="product-body"><h4>Returns Workflow SOP</h4><p>End-to-end return handling from request to warehouse restock.</p>
-          <div class="product-foot"><span class="price">€29</span><a class="link-arrow" href="#">View details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
-        </div>
-        <div class="product-card reveal tilt">
-          <div class="product-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M16 3l-4 4-4-4"/></svg></div>
-          <div class="product-body"><h4>Shipping Issue Escalation SOP</h4><p>Decision tree for lost, delayed and damaged-in-transit shipments.</p>
-          <div class="product-foot"><span class="price">€24</span><a class="link-arrow" href="#">View details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
-        </div>
-        <div class="product-card reveal tilt">
-          <div class="product-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h8M8 17h4"/></svg></div>
-          <div class="product-body"><h4>Complete Shopify Ops Bundle</h4><p>32 SOPs covering the full customer support lifecycle in one bundle.</p>
-          <div class="product-foot"><span class="price">€149</span><a class="link-arrow" href="#">View details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
-        </div>
+    <div class="hero-visual reveal in">
+      <div class="doc-card doc-1">
+        <div class="tag">Standard Operating Procedure</div>
+        <div class="doc-title">Refund Processing</div>
+        <div class="doc-line w1"></div><div class="doc-line w2"></div><div class="doc-line w3"></div><div class="doc-line w4"></div>
+      </div>
+      <div class="doc-card doc-2">
+        <div class="tag">KPI Considerations</div>
+        <div class="kpi-row"><span>First Response Time</span><b>&lt;24h</b></div>
+        <div class="kpi-row"><span>CSAT</span><b>&gt;90%</b></div>
+        <div class="kpi-row"><span>Escalation Rate</span><b>&lt;10%</b></div>
+      </div>
+      <div class="doc-card doc-3">
+        <div class="tag">Escalation Workflow</div>
+        <div class="flow-step"><span class="flow-dot"></span>Ticket flagged</div>
+        <div class="flow-step"><span class="flow-dot"></span>Risk reviewed</div>
+        <div class="flow-step"><span class="flow-dot"></span>Routed to owner</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="why-section">
-    <div class="wrap" style="padding:72px 32px;">
-      <div class="section-head reveal"><span class="kicker">Why RugaOps</span><h2>Documentation your team will actually follow</h2></div>
-      <div class="grid-4b">
-        <div class="flip-card reveal"><div class="flip-inner">
-          <div class="flip-face flip-front"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><h4>Ready-to-use SOPs</h4><p>No blank pages, ready to deploy today.</p></div>
-          <div class="flip-face flip-back"><span class="tag">Why it matters</span><p>Every SOP ships fully written and formatted — your team implements it the same day it's purchased.</p></div>
-        </div></div>
-        <div class="flip-card reveal"><div class="flip-inner">
-          <div class="flip-face flip-front"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/></svg></div><h4>Built by CX professionals</h4><p>Written by real support operators.</p></div>
-          <div class="flip-face flip-back"><span class="tag">Why it matters</span><p>Each SOP comes from someone who has actually run a support desk for a growing e-commerce brand.</p></div>
-        </div></div>
-        <div class="flip-card reveal"><div class="flip-inner">
-          <div class="flip-face flip-front"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div><h4>Easy to customize</h4><p>Adapts to your policies in minutes.</p></div>
-          <div class="flip-face flip-back"><span class="tag">Why it matters</span><p>Editable templates mean your tone, your rules, your tools — without starting from scratch.</p></div>
-        </div></div>
-        <div class="flip-card reveal"><div class="flip-inner">
-          <div class="flip-face flip-front"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 8v4l3 3M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><h4>Saves hours of documentation</h4><p>Skip weeks of internal writing.</p></div>
-          <div class="flip-face flip-back"><span class="tag">Why it matters</span><p>Get a fully documented CX operation instantly, instead of drafting it internally over weeks.</p></div>
-        </div></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="categories">
-    <div class="wrap">
-      <div class="section-head reveal"><span class="kicker">Browse by category</span><h2>Find the SOP for the exact problem</h2></div>
-      <div class="grid-cat">
-        <a class="cat-card reveal" href="#"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 14l-4-4 4-4M5 10h14"/></svg></span><span>Refund SOPs</span></a>
-        <a class="cat-card reveal" href="#"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3.27 6.96L12 12l8.73-5.04M12 22.08V12"/></svg></span><span>Returns SOPs</span></a>
-        <a class="cat-card reveal" href="#"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M16 3l-4 4-4-4"/></svg></span><span>Shipping Issues</span></a>
-        <a class="cat-card reveal" href="#"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg></span><span>Order Management</span></a>
-        <a class="cat-card reveal" href="#"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span><span>Customer Communication</span></a>
-        <a class="cat-card reveal" href="#"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 2l1.5 5M18 2l-1.5 5M6 7h12l-1 13H7L6 7z"/></svg></span><span>Shopify Operations</span></a>
-        <a class="cat-card reveal" href="#"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 12l2 2 4-4M5 3h14v18l-7-4-7 4V3z"/></svg></span><span>Templates &amp; Checklists</span></a>
-        <a class="cat-card reveal" href="#"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 8v4l3 3M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span>Response Time SLAs</span></a>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <div class="section-head reveal"><span class="kicker">How it works</span><h2>From checkout to implementation in minutes</h2></div>
-      <div class="steps-row">
-        <div class="step reveal"><span class="num">01</span><h4>Purchase</h4><p>Choose a single SOP or a full bundle and check out securely.</p><div class="step-line"></div></div>
-        <div class="step reveal"><span class="num">02</span><h4>Download instantly</h4><p>Get immediate access to editable docs, checklists and templates.</p><div class="step-line"></div></div>
-        <div class="step reveal"><span class="num">03</span><h4>Implement in your business</h4><p>Roll it out to your team and start running support consistently.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <div class="section-head reveal"><span class="kicker">Testimonials</span><h2>Trusted by support teams at growing brands</h2></div>
-      <div class="grid-3">
-        <div class="quote-card reveal"><div class="stars">★★★★★</div><p class="q">"We replaced four scattered Google Docs with one RugaOps bundle. Onboarding a new support hire now takes a day instead of a week."</p><div class="who"><div class="avatar">MK</div><div><div class="who-name">Mara K.</div><div class="who-role">Head of CX, DTC skincare brand</div></div></div></div>
-        <div class="quote-card reveal"><div class="stars">★★★★★</div><p class="q">"The refund SOP alone paid for the entire bundle. Our chargeback rate dropped within the first month of using it."</p><div class="who"><div class="avatar">JD</div><div><div class="who-name">Jonas D.</div><div class="who-role">Operations Lead, homeware store</div></div></div></div>
-        <div class="quote-card reveal"><div class="stars">★★★★★</div><p class="q">"Clean, professional, and genuinely written by someone who understands Shopify support. Exactly what our team needed."</p><div class="who"><div class="avatar">SR</div><div><div class="who-name">Sofia R.</div><div class="who-role">Founder, apparel brand</div></div></div></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="resources">
-    <div class="wrap">
-      <div class="signup-panel reveal">
-        <div><h2>Get a free CX checklist</h2><p>Join 1,200+ e-commerce teams getting one practical SOP or checklist a month — no fluff, just documentation you can use immediately.</p></div>
-        <div>
-          <form class="signup-form" onsubmit="return false;"><input type="email" placeholder="you@company.com" required><button class="btn btn-primary magnetic" type="submit">Send me the SOP</button></form>
-          <p class="signup-note">One useful email a month. Unsubscribe anytime.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer id="footer">
+<!-- ================= PROBLEM ================= -->
+<section class="problem">
   <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-col">
-        <div class="brand" style="margin-bottom:14px;"><span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5L9.5 17L19 7" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>RugaOps</div>
-        <p style="font-size:13.5px;max-width:220px;">Professional SOPs, workflows and templates for e-commerce customer support teams.</p>
-        <div class="foot-social">
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/></svg></a>
-          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v6M7 7v.01M12 16v-3.5a2.5 2.5 0 015 0V16"/></svg></a>
-          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+    <div class="problem-head reveal">
+      <div class="eyebrow" style="justify-content:center;">The Problem</div>
+      <h2>Is Your Customer Support Running on Improvisation?</h2>
+    </div>
+    <div class="problem-grid reveal-stagger reveal">
+      <div class="problem-card"><div class="num">01</div><p>Your team answers the same questions repeatedly.</p></div>
+      <div class="problem-card"><div class="num">02</div><p>Different employees handle the same issue differently.</p></div>
+      <div class="problem-card"><div class="num">03</div><p>Important processes aren't documented anywhere.</p></div>
+      <div class="problem-card"><div class="num">04</div><p>Nobody knows when an issue should be escalated.</p></div>
+      <div class="problem-card"><div class="num">05</div><p>Too many support tasks are still done manually.</p></div>
+      <div class="problem-card"><div class="num">06</div><p>Your process lives in people's heads, not in a system.</p></div>
+    </div>
+    <p class="problem-close reveal">These problems don't always require a bigger support team. Sometimes they require a better system.</p>
+  </div>
+</section>
+
+<!-- ================= SERVICES PREVIEW ================= -->
+<section class="services-preview">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" style="justify-content:center;">Services</div>
+      <h2>How RugaOps Can Help</h2>
+    </div>
+    <div class="card-grid reveal-stagger reveal">
+      <div class="service-card">
+        <h3>Support Operations Coaching</h3>
+        <span class="price">€100 / session</span>
+        <p>One-on-one guidance for business owners and small support teams.</p>
+      </div>
+      <div class="service-card">
+        <h3>Support Process Audit</h3>
+        <span class="price">Starting at €250</span>
+        <p>Identify bottlenecks, repetitive work, missing processes, and improvement opportunities.</p>
+      </div>
+      <div class="service-card">
+        <h3>Support System Setup</h3>
+        <span class="price">Starting at €500</span>
+        <p>Create practical SOPs, workflows, escalation processes, and support documentation.</p>
+      </div>
+      <div class="service-card">
+        <h3>Knowledge Base Setup</h3>
+        <span class="price">Starting at €400</span>
+        <p>Organize internal support documentation and customer-facing FAQs.</p>
+      </div>
+      <div class="service-card">
+        <h3>Support Automation Roadmap</h3>
+        <span class="price">Starting at €350</span>
+        <p>Identify repetitive tasks and opportunities to simplify or automate support workflows.</p>
+      </div>
+      <div class="service-card">
+        <h3>Support Operations Makeover</h3>
+        <span class="price">Starting at €1,000</span>
+        <p>A comprehensive package for businesses that want to improve several areas of support at once.</p>
+      </div>
+    </div>
+    <div class="center-btn reveal"><a href="#services" class="btn btn-primary">View All Services &amp; Pricing</a></div>
+  </div>
+</section>
+
+<!-- ================= WHAT I DO ================= -->
+<section class="whatido">
+  <div class="wrap whatido-inner">
+    <div class="reveal">
+      <div class="eyebrow">The Approach</div>
+      <h2>I Don't Answer Your Customers. I Improve How Your Team Supports Them.</h2>
+      <p>RugaOps focuses on the systems behind customer service. Instead of becoming another person in your support inbox, I help businesses create clearer processes, better documentation, smarter workflows, and practical support systems.</p>
+    </div>
+    <div class="compare reveal">
+      <div class="compare-col no">
+        <h4>Not RugaOps</h4>
+        <ul>
+          <li>Frontline ticket answering</li>
+          <li>Call-center support</li>
+          <li>Daily customer email management</li>
+          <li>Outsourced customer service</li>
+        </ul>
+      </div>
+      <div class="compare-col yes">
+        <h4>RugaOps</h4>
+        <ul>
+          <li>Support process design</li>
+          <li>SOP creation</li>
+          <li>Workflow design</li>
+          <li>Documentation</li>
+          <li>Escalation systems</li>
+          <li>Automation planning</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES FULL / PRICING ================= -->
+<section class="services-full" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" style="justify-content:center;">Pricing</div>
+      <h2>Customer Support Systems That Make Work Easier</h2>
+      <p>Practical coaching, audits, and support-operation systems for small businesses, ecommerce brands, startups, and small support teams.</p>
+    </div>
+
+    <div class="pricing-grid reveal-stagger reveal">
+      <div class="pricing-card">
+        <h3>1:1 Support Operations Coaching</h3>
+        <span class="price">€100 / session</span>
+        <p class="desc">For business owners or small support teams that need practical guidance but want to implement the changes themselves.</p>
+        <ul>
+          <li>60–90 minute online session</li>
+          <li>Review of current support challenges</li>
+          <li>Process, SOP, workflow &amp; escalation guidance</li>
+          <li>Automation opportunities</li>
+          <li>Written action plan after the session</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost btn-sm">Book a Coaching Session</a>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Support Process Audit</h3>
+        <span class="price">Starting at €250</span>
+        <p class="desc">For businesses that aren't sure what is causing problems in their customer support operation.</p>
+        <ul>
+          <li>Workflows, ticket categories &amp; SOP review</li>
+          <li>Escalation process &amp; knowledge base review</li>
+          <li>Repetitive task &amp; automation opportunities</li>
+          <li>Support Improvement Roadmap with priorities</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost btn-sm">Request an Audit</a>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Support System Setup</h3>
+        <span class="price">Starting at €500</span>
+        <p class="desc">For businesses that want RugaOps to help create their support documentation and processes.</p>
+        <ul>
+          <li>Support process review</li>
+          <li>Up to 3 custom SOPs</li>
+          <li>Workflow diagrams &amp; basic escalation process</li>
+          <li>Ticket categorization &amp; implementation guidance</li>
+        </ul>
+        <p class="addon">Additional SOPs: €75–€125 each, depending on complexity.</p>
+        <a href="#contact" class="btn btn-ghost btn-sm">Build My Support System</a>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Knowledge Base Setup</h3>
+        <span class="price">Starting at €400</span>
+        <p class="desc">For businesses that want to organize internal support documentation or customer-facing FAQs.</p>
+        <ul>
+          <li>Knowledge base structure &amp; category organization</li>
+          <li>Up to 10 FAQ/support articles</li>
+          <li>Article templates &amp; content recommendations</li>
+          <li>Search/navigation recommendations</li>
+        </ul>
+        <p class="addon">Additional articles: €30–€60 each, depending on complexity.</p>
+        <a href="#contact" class="btn btn-ghost btn-sm">Build My Knowledge Base</a>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Support Automation Roadmap</h3>
+        <span class="price">Starting at €350</span>
+        <p class="desc">For businesses that want to reduce repetitive manual support work.</p>
+        <ul>
+          <li>Review of current support processes</li>
+          <li>Identification of repetitive tasks</li>
+          <li>Recommended automation workflows &amp; tools</li>
+          <li>Prioritized implementation roadmap</li>
+        </ul>
+        <p class="addon">Technical implementation and complex integrations can be quoted separately.</p>
+        <a href="#contact" class="btn btn-ghost btn-sm">Plan My Automation</a>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Ongoing Support Operations Advisory</h3>
+        <span class="price">Starting at €500 / month</span>
+        <p class="desc">For businesses that want continued guidance after their initial project.</p>
+        <ul>
+          <li>Monthly process &amp; KPI review</li>
+          <li>SOP updates &amp; new workflow development</li>
+          <li>Knowledge base updates</li>
+          <li>Monthly improvement meeting</li>
+        </ul>
+        <p class="addon">Exact monthly scope agreed based on your needs.</p>
+        <a href="#contact" class="btn btn-ghost btn-sm">Discuss Ongoing Support</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <h3>Support Operations Makeover</h3>
+        <span class="price">Starting at €1,000</span>
+        <p class="desc">The RugaOps flagship service — for businesses that want help improving several areas of their support operation at once.</p>
+        <ul>
+          <li>Support process audit</li>
+          <li>Up to 5 custom SOPs</li>
+          <li>Workflow design &amp; escalation process</li>
+          <li>FAQ/knowledge base structure &amp; ticket categorization</li>
+          <li>Automation recommendations &amp; implementation roadmap</li>
+          <li>2 coaching sessions</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary btn-sm" style="align-self:flex-start;">Book a Support Operations Consultation</a>
+      </div>
+
+      <div class="custom-cta">
+        <div>
+          <h3>Need Something More Specific?</h3>
+          <p>Every business has different support processes, tools, team sizes, and requirements. RugaOps can create a custom package around your business — from complete support department setups to large knowledge-base projects and long-term consulting.</p>
+        </div>
+        <a href="#contact" class="btn btn-primary btn-sm">Request a Custom Quote</a>
+      </div>
+    </div>
+
+    <p class="pricing-note reveal">Prices shown are starting prices. Final pricing may vary depending on business size, number of processes, complexity, tools, and project requirements.</p>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="how" id="how-it-works">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" style="justify-content:center;">Process</div>
+      <h2>From Support Chaos to a Clear System</h2>
+    </div>
+    <div class="steps reveal-stagger reveal">
+      <div class="step"><div class="step-num">01</div><h4>Discover</h4><p>Understand how your customer support currently works.</p></div>
+      <div class="step"><div class="step-num">02</div><h4>Diagnose</h4><p>Identify bottlenecks, repetitive work, missing processes, and areas for improvement.</p></div>
+      <div class="step"><div class="step-num">03</div><h4>Design</h4><p>Create SOPs, workflows, documentation, and support systems.</p></div>
+      <div class="step"><div class="step-num">04</div><h4>Implement</h4><p>Help the business put the new systems into practice.</p></div>
+      <div class="step"><div class="step-num">05</div><h4>Improve</h4><p>Identify opportunities to simplify, automate, and improve over time.</p></div>
+    </div>
+    <div class="center-btn reveal"><a href="#contact" class="btn btn-primary">Book a Consultation</a></div>
+  </div>
+</section>
+
+<!-- ================= COACHING ================= -->
+<section class="coaching">
+  <div class="wrap coaching-inner">
+    <div class="reveal">
+      <div class="eyebrow">Coaching</div>
+      <h2>Support Operations Coaching</h2>
+      <p>Practical one-on-one guidance for business owners and small teams who want to organize their customer support without hiring a full-time support operations manager.</p>
+      <div class="topics">
+        <span class="topic-pill">Support workflows</span>
+        <span class="topic-pill">SOPs</span>
+        <span class="topic-pill">Ticket categories</span>
+        <span class="topic-pill">Escalation processes</span>
+        <span class="topic-pill">FAQs</span>
+        <span class="topic-pill">Knowledge bases</span>
+        <span class="topic-pill">Support KPIs</span>
+        <span class="topic-pill">Automation opportunities</span>
+      </div>
+      <div style="margin-top:30px;"><a href="#contact" class="btn btn-primary">Book a Coaching Session — €100</a></div>
+    </div>
+    <div class="process-col reveal">
+      <div class="process-block">
+        <h4>Before the session</h4>
+        <ul>
+          <li>Current support process</li>
+          <li>Common customer issues</li>
+          <li>Existing documentation &amp; tools</li>
+          <li>Biggest support challenges</li>
+        </ul>
+      </div>
+      <div class="process-block">
+        <h4>During the session</h4>
+        <ul>
+          <li>Identify problems &amp; map processes</li>
+          <li>Prioritize improvements</li>
+          <li>Design solutions</li>
+          <li>Answer questions</li>
+        </ul>
+      </div>
+      <div class="process-block">
+        <h4>After the session</h4>
+        <ul>
+          <li>Recommendations &amp; action items</li>
+          <li>Practical next steps</li>
+          <li>Process guidance where applicable</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="about" id="about">
+  <div class="wrap about-inner">
+    <div class="about-photo reveal">
+      <div class="ring"></div>
+      <img src="assets/logo.png" alt="RugaOps">
+    </div>
+    <div class="reveal">
+      <div class="kicker">About RugaOps</div>
+      <h2>Hi, I'm Noémi.</h2>
+      <p>My background in customer support gave me firsthand experience with the everyday problems that can make support complicated — repetitive requests, unclear processes, inconsistent handling, and situations where the right process isn't always obvious.</p>
+      <p>I created RugaOps to focus on the part of customer support that often gets overlooked: the system behind the conversations.</p>
+      <p>My goal is to help small businesses create clearer processes, better documentation, practical workflows, and support systems that make everyday work easier.</p>
+      <a href="#contact" class="btn btn-ghost">Book a Consultation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESOURCES ================= -->
+<section class="resources" id="resources">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" style="justify-content:center;">Resources</div>
+      <h2>From the Blog — Coming Soon</h2>
+      <p>Practical articles on customer support operations, SOPs, workflows, and automation.</p>
+    </div>
+    <div class="res-grid reveal-stagger reveal">
+      <div class="res-card"><span class="res-tag">Fundamentals</span><h4>What Is Customer Support Operations?</h4></div>
+      <div class="res-card"><span class="res-tag">SOPs</span><h4>Why Small Businesses Need Support SOPs</h4></div>
+      <div class="res-card"><span class="res-tag">SOPs</span><h4>How to Create a Refund SOP</h4></div>
+      <div class="res-card"><span class="res-tag">Workflows</span><h4>How to Build a Customer Support Workflow</h4></div>
+      <div class="res-card"><span class="res-tag">Efficiency</span><h4>How to Reduce Repetitive Support Tickets</h4></div>
+      <div class="res-card"><span class="res-tag">Automation</span><h4>What Customer Support Tasks Should Be Automated?</h4></div>
+      <div class="res-card"><span class="res-tag">Knowledge Base</span><h4>How to Build an Ecommerce Knowledge Base</h4></div>
+      <div class="res-card"><span class="res-tag">Fundamentals</span><h4>Customer Service vs. Customer Support Operations</h4></div>
+      <div class="res-card"><span class="res-tag">Escalation</span><h4>How to Create a Support Escalation Process</h4></div>
+    </div>
+    <p class="res-soon reveal">New articles publishing soon. Want a heads-up when they're live? <a href="#contact" style="color:var(--accent-dark); font-weight:600;">Get in touch</a>.</p>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section style="padding:0 0 120px;">
+  <div class="final-cta reveal">
+    <h2>Ready to Build a Better Support System?</h2>
+    <p>Let's identify what's slowing your support operation down and create a practical plan to improve it.</p>
+    <a href="#contact" class="btn btn-primary">Book a Consultation</a>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact" id="contact">
+  <div class="wrap contact-inner">
+    <div class="reveal">
+      <div class="eyebrow">Contact</div>
+      <h2>Let's Talk About Your Support Operation.</h2>
+      <p>Tell me what's currently happening in your customer support operation and where you're struggling. We'll identify where you can start improving.</p>
+
+      <div class="contact-info-item">
+        <span class="dot"></span>
+        <div><h4>Book directly</h4><p>Prefer to skip the form? Book a consultation slot straight into the calendar.</p></div>
+      </div>
+      <div class="contact-info-item">
+        <span class="dot"></span>
+        <div><h4>Response time</h4><p>Every inquiry gets a reply within 1–2 business days.</p></div>
+      </div>
+      <a href="#contact" class="btn btn-primary">Book a Consultation</a>
+    </div>
+
+    <div>
+      <form class="contact-form reveal" id="contactForm" action="https://formspree.io/f/xdenoodl" method="POST">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-field">
+            <label for="business">Business name</label>
+            <input type="text" id="business" name="business">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-field">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" placeholder="optional">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="business_type">Business type</label>
+            <select id="business_type" name="business_type">
+              <option value="">Select one</option>
+              <option>Ecommerce</option>
+              <option>Startup</option>
+              <option>Small business</option>
+              <option>Small support team</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="team_size">Support team size</label>
+            <select id="team_size" name="team_size">
+              <option value="">Select one</option>
+              <option>Just me</option>
+              <option>2–5</option>
+              <option>6–15</option>
+              <option>16+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field full">
+            <label for="challenge">Biggest support challenge</label>
+            <textarea id="challenge" name="challenge" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field full">
+            <label for="help">What would you like help with?</label>
+            <textarea id="help" name="help" rows="3" required></textarea>
+          </div>
+        </div>
+        <div class="form-submit">
+          <button type="submit" class="btn btn-primary" id="submitBtn">Submit
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <span class="form-note">We'll never share your information.</span>
+        </div>
+        <div class="form-status" id="formStatus"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><img src="assets/logo.png" alt="RugaOps"> RugaOps</div>
+        <p>Customer support operations coaching &amp; consulting for small businesses, ecommerce brands, startups, and small support teams.</p>
+        <div class="social-row">
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="Instagram">ig</a>
+          <a href="#" aria-label="Email">@</a>
         </div>
       </div>
-      <div class="foot-col"><h5>Company</h5><ul><li><a href="#about">About</a></li><li><a href="#footer">Contact</a></li><li><a href="#">FAQ</a></li></ul></div>
-      <div class="foot-col"><h5>Legal</h5><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms &amp; Conditions</a></li><li><a href="#">Refund Policy</a></li></ul></div>
-      <div class="foot-col"><h5>Explore</h5><ul><li><a href="#products">SOP Library</a></li><li><a href="#categories">Templates</a></li><li><a href="#resources">Articles</a></li></ul></div>
-      <div class="foot-col"><h5>Newsletter</h5><p style="font-size:13px;margin-bottom:12px;">One SOP a month, straight to your inbox.</p><a class="btn btn-ghost btn-sm magnetic" href="#resources">Subscribe</a></div>
+      <div>
+        <h5>Site</h5>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#resources">Resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#contact">Book a Consultation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Flagship</h5>
+        <ul>
+          <li><a href="#services">Support Operations Makeover</a></li>
+          <li><a href="#services">Custom Projects</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="foot-bottom"><span>© 2026 RugaOps. All rights reserved.</span><span>Made for e-commerce support teams.</span></div>
+    <div class="footer-bottom">
+      <p>© 2026 RugaOps. All rights reserved.</p>
+      <p>Sofia, Bulgaria — working with clients worldwide.</p>
+    </div>
   </div>
 </footer>
 
 <script>
-  const isFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  const dot=document.getElementById('cursorDot'), ring=document.getElementById('cursorRing'), glow=document.getElementById('cursorGlow');
-  const mesh1=document.getElementById('mesh1'), mesh2=document.getElementById('mesh2');
+  // ---------- header scroll state ----------
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive:true });
 
-  if(isFine){
-    document.body.classList.add('has-cursor');
-    let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my,gx=mx,gy=my;
-    window.addEventListener('mousemove', e=>{
-      mx=e.clientX; my=e.clientY;
-      dot.style.transform=`translate(${mx}px, ${my}px) translate(-50%,-50%)`;
-    });
-    (function loop(){
-      rx+=(mx-rx)*0.18; ry+=(my-ry)*0.18;
-      gx+=(mx-gx)*0.06; gy+=(my-gy)*0.06;
-      ring.style.transform=`translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
-      glow.style.transform=`translate(${gx}px, ${gy}px) translate(-50%,-50%)`;
-      requestAnimationFrame(loop);
-    })();
-    document.querySelectorAll('a,button,.tilt,input,.flip-card').forEach(el=>{
-      el.addEventListener('mouseenter', ()=>ring.classList.add('big'));
-      el.addEventListener('mouseleave', ()=>ring.classList.remove('big'));
-    });
-    document.querySelectorAll('.magnetic').forEach(btn=>{
-      btn.addEventListener('mousemove', e=>{
-        const r=btn.getBoundingClientRect();
-        const relX=e.clientX-r.left-r.width/2, relY=e.clientY-r.top-r.height/2;
-        btn.style.transform=`translate(${relX*0.25}px, ${relY*0.35}px)`;
-      });
-      btn.addEventListener('mouseleave', ()=>{ btn.style.transform='translate(0,0)'; });
-    });
-    const orbitWrap=document.getElementById('orbitWrap');
-    const orbitStage=document.getElementById('orbitStage');
-    if(orbitWrap && orbitStage){
-      orbitWrap.addEventListener('mousemove', e=>{
-        const r=orbitWrap.getBoundingClientRect();
-        const px=(e.clientX-r.left)/r.width-0.5, py=(e.clientY-r.top)/r.height-0.5;
-        orbitStage.style.transform=`rotateY(${px*18}deg) rotateX(${-py*18}deg)`;
-      });
-      orbitWrap.addEventListener('mouseleave', ()=>{ orbitStage.style.transform='rotateY(0) rotateX(0)'; });
-    }
-    document.querySelectorAll('.tilt').forEach(card=>{
-      card.addEventListener('mousemove', e=>{
-        const r=card.getBoundingClientRect();
-        const px=(e.clientX-r.left)/r.width-0.5, py=(e.clientY-r.top)/r.height-0.5;
-        card.style.transform=`rotateY(${px*9}deg) rotateX(${-py*9}deg)`;
-      });
-      card.addEventListener('mouseleave', ()=>{ card.style.transform='rotateY(0) rotateX(0)'; });
-    });
+  // ---------- mobile menu ----------
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const scrim = document.getElementById('scrim');
+  function toggleMenu(open){
+    mobileMenu.classList.toggle('open', open);
+    scrim.classList.toggle('open', open);
   }
+  burger.addEventListener('click', () => toggleMenu(!mobileMenu.classList.contains('open')));
+  scrim.addEventListener('click', () => toggleMenu(false));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
 
-  window.addEventListener('scroll', ()=>{
-    const y=window.scrollY;
-    mesh1.style.transform=`translateY(${y*0.1}px)`;
-    mesh2.style.transform=`translateY(${-y*0.08}px)`;
-  }, {passive:true});
+  // ---------- scroll reveal ----------
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.15 });
+  revealEls.forEach(el => io.observe(el));
 
-  const io=new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }); }, {threshold:0.15});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // ---------- contact form (Formspree AJAX) ----------
+  const form = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const status = document.getElementById('formStatus');
 
-  function animateCount(el,target,decimal){
-    const duration=1400, start=performance.now();
-    function step(now){
-      const p=Math.min((now-start)/duration,1);
-      const eased=1-Math.pow(1-p,3);
-      const val=target*eased;
-      el.textContent = decimal ? val.toFixed(1) : Math.round(val).toLocaleString('en-US');
-      if(p<1) requestAnimationFrame(step);
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = 'Sending…';
+    status.className = 'form-status';
+    status.textContent = '';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        status.textContent = "Thanks — your message has been sent. We'll be in touch within 1–2 business days.";
+        status.className = 'form-status show ok';
+        form.reset();
+      } else {
+        const data = await response.json().catch(() => null);
+        const msg = data && data.errors ? data.errors.map(er => er.message).join(', ') : 'Something went wrong. Please try again.';
+        status.textContent = msg;
+        status.className = 'form-status show err';
+      }
+    } catch (err) {
+      status.textContent = 'Network error — please try again or email us directly.';
+      status.className = 'form-status show err';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
     }
-    requestAnimationFrame(step);
-  }
-  const counterIO=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ const el=e.target; const decimal=el.classList.contains('counter-decimal'); animateCount(el,parseFloat(el.dataset.target),decimal); counterIO.unobserve(el); } });
-  }, {threshold:0.6});
-  document.querySelectorAll('.counter,.counter-decimal').forEach(el=>counterIO.observe(el));
+  });
 </script>
+
 </body>
 </html>
