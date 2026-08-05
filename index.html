@@ -1,1000 +1,1673 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RugaOps — Turn Customer Support Into a System</title>
-<meta name="description" content="RugaOps helps small businesses build clear customer support processes, SOPs, workflows, and documentation. Book a consultation.">
-<link rel="icon" href="assets/logo.png">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RugaOps — Operations Playbook</title>
+<meta name="description" content="RugaOps Operations Playbook: how the support team handles damage claims, cancellations, escalations and refunds." />
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
   :root{
-    --bg:#e6ecf0;
-    --bg-alt:#f4f1eb;
-    --white:#ffffff;
-    --navy:#001b5e;
-    --navy-soft:#3c4f83;
-    --line:#c9d3de;
-    --accent:#2b57ff;
-    --accent-dark:#0032c9;
-    --shadow: 0 20px 45px -25px rgba(0,27,94,0.35);
-    --shadow-sm: 0 10px 24px -16px rgba(0,27,94,0.28);
-    --radius-lg: 22px;
-    --radius-md: 16px;
-    --radius-sm: 10px;
-    --maxw: 1180px;
+    --navy-900:#070c22;
+    --navy-800:#0a1330;
+    --navy-700:#101c47;
+    --navy-600:#16265e;
+    --paper:#eef1f7;
+    --paper-2:#e2e7f1;
+    --ink:#0b1533;
+    --ink-soft:#4a5578;
+    --blue-500:#3d7bff;
+    --blue-400:#6fa8ff;
+    --blue-700:#1230c4;
+    --amber:#ffb020;
+    --coral:#ff6a55;
+    --green:#2fd07b;
+    --line: rgba(11,21,51,0.10);
+    --line-dark: rgba(230,236,255,0.14);
+    --shadow: 0 20px 60px rgba(10,19,48,0.12);
+    --ring-grad: conic-gradient(from 180deg, #1230c4, #3d7bff 35%, #9fc4ff 55%, #3d7bff 75%, #1230c4);
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
   }
+
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     margin:0;
-    background:var(--bg);
-    color:var(--navy);
-    font-family:'Inter', system-ui, sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
+  ::selection{ background:var(--blue-500); color:#fff; }
+
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
   h1,h2,h3,h4{
-    font-family:'Poppins', sans-serif;
-    color:var(--navy);
-    line-height:1.12;
-    margin:0 0 .5em;
+    font-family:var(--font-display);
+    margin:0;
     letter-spacing:-0.01em;
   }
-  p{margin:0 0 1em; color:var(--navy-soft); line-height:1.65;}
-  a{color:inherit;}
-  img{max-width:100%; display:block;}
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
-  section{padding:120px 0;}
+
   .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:'Inter'; font-weight:700; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
-    color:var(--accent-dark); margin-bottom:18px;
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--blue-500);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
   }
-  .eyebrow::before{content:''; width:22px; height:2px; background:var(--accent); display:inline-block;}
+  .eyebrow::before{
+    content:"";
+    width:22px;
+    height:1px;
+    background:var(--blue-500);
+    display:inline-block;
+  }
 
-  /* ---------- reveal animation ---------- */
-  .reveal{opacity:0; transform:translateY(28px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);}
-  .reveal.in{opacity:1; transform:translateY(0);}
-  .reveal-stagger > *{opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease;}
-  .reveal-stagger.in > *{opacity:1; transform:translateY(0);}
-  .reveal-stagger.in > *:nth-child(1){transition-delay:.03s;}
-  .reveal-stagger.in > *:nth-child(2){transition-delay:.11s;}
-  .reveal-stagger.in > *:nth-child(3){transition-delay:.19s;}
-  .reveal-stagger.in > *:nth-child(4){transition-delay:.27s;}
-  .reveal-stagger.in > *:nth-child(5){transition-delay:.35s;}
-  .reveal-stagger.in > *:nth-child(6){transition-delay:.43s;}
   @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    .reveal, .reveal-stagger > *{opacity:1 !important; transform:none !important; transition:none !important;}
-    *{animation:none !important;}
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
   }
 
-  /* ---------- buttons ---------- */
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    font-family:'Inter'; font-weight:600; font-size:15px;
-    padding:14px 26px; border-radius:999px; cursor:pointer; text-decoration:none;
-    border:1px solid transparent; transition:transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
-    white-space:nowrap;
+  /* ---------- reveal-on-scroll ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .8s cubic-bezier(.16,.84,.44,1), transform .8s cubic-bezier(.16,.84,.44,1);
+    transition-delay:var(--d, 0ms);
   }
-  .btn-primary{
-    background:linear-gradient(135deg, var(--accent), var(--accent-dark));
-    color:#fff; box-shadow:var(--shadow-sm);
-  }
-  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 18px 30px -14px rgba(0,50,201,0.55);}
-  .btn-ghost{
-    background:transparent; border-color:var(--navy); color:var(--navy);
-  }
-  .btn-ghost:hover{background:var(--navy); color:#fff; transform:translateY(-3px);}
-  .btn-sm{padding:10px 18px; font-size:13.5px;}
-  .btn svg{transition:transform .25s ease;}
-  .btn:hover svg{transform:translateX(3px);}
+  .reveal.in{ opacity:1; transform:translateY(0); }
 
-  /* ---------- header ---------- */
-  header{
-    position:fixed; top:0; left:0; right:0; z-index:200;
-    padding:20px 0; transition:padding .35s ease, background .35s ease, box-shadow .35s ease;
+  /* ================= NAV ================= */
+  header.nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:200;
+    padding:18px 0;
+    transition:background .4s ease, padding .4s ease, box-shadow .4s ease, border-color .4s ease;
+    border-bottom:1px solid transparent;
   }
-  header.scrolled{
-    padding:12px 0; background:rgba(230,236,240,0.82); backdrop-filter:blur(14px);
-    box-shadow:0 8px 30px -20px rgba(0,27,94,0.4); border-bottom:1px solid rgba(0,27,94,0.08);
+  header.nav.scrolled{
+    background:rgba(7,12,34,0.72);
+    backdrop-filter:blur(16px) saturate(140%);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);
+    padding:12px 0;
+    border-color:var(--line-dark);
   }
-  .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:24px;}
-  .brand{display:flex; align-items:center; gap:10px; font-family:'Poppins'; font-weight:700; font-size:19px; text-decoration:none;}
-  .brand img{width:34px; height:34px; object-fit:contain;}
-  nav.links{display:flex; align-items:center; gap:30px;}
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    color:#fff;
+  }
+  .brand img{ width:34px; height:34px; }
+  .brand-name{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:-0.01em;
+  }
+  .brand-tag{
+    font-family:var(--font-mono);
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--blue-400);
+    text-transform:uppercase;
+    display:block;
+    margin-top:1px;
+  }
+  nav.links{
+    display:flex;
+    gap:30px;
+    list-style:none;
+    margin:0; padding:0;
+  }
   nav.links a{
-    font-size:14.5px; font-weight:500; text-decoration:none; color:var(--navy-soft);
-    position:relative; padding:4px 0; transition:color .2s ease;
+    color:#c9d3f4;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+    position:relative;
+    padding-bottom:4px;
+    transition:color .25s ease;
   }
   nav.links a::after{
-    content:''; position:absolute; left:0; bottom:-2px; width:0; height:2px; background:var(--accent);
-    transition:width .25s ease;
+    content:"";
+    position:absolute;
+    left:0; bottom:0;
+    width:0%;
+    height:2px;
+    background:linear-gradient(90deg,var(--blue-500),var(--blue-400));
+    transition:width .3s ease;
+    border-radius:2px;
   }
-  nav.links a:hover{color:var(--navy);}
-  nav.links a:hover::after{width:100%;}
-  .nav-cta{display:flex; align-items:center; gap:14px;}
-  .burger{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px;}
-  .burger span{width:24px; height:2px; background:var(--navy); border-radius:2px; transition:transform .3s ease, opacity .3s ease;}
-  .mobile-menu{
-    position:fixed; inset:0 0 0 auto; width:min(320px,80vw); background:var(--white); z-index:300;
-    padding:100px 30px 30px; transform:translateX(100%); transition:transform .4s cubic-bezier(.2,.8,.2,1);
-    box-shadow:-20px 0 40px -20px rgba(0,27,94,0.3);
-  }
-  .mobile-menu.open{transform:translateX(0);}
-  .mobile-menu a{display:block; font-size:17px; font-weight:600; padding:14px 0; text-decoration:none; color:var(--navy); border-bottom:1px solid var(--line);}
-  .scrim{position:fixed; inset:0; background:rgba(0,27,94,0.35); z-index:250; opacity:0; pointer-events:none; transition:opacity .35s ease;}
-  .scrim.open{opacity:1; pointer-events:auto;}
+  nav.links a:hover{ color:#fff; }
+  nav.links a:hover::after,
+  nav.links a.active::after{ width:100%; }
+  nav.links a.active{ color:#fff; }
 
-  /* ---------- hero ---------- */
+  .btn{
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:14px;
+    border:none;
+    cursor:pointer;
+    border-radius:999px;
+    padding:11px 22px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .3s cubic-bezier(.16,.84,.44,1), box-shadow .3s ease, background .3s ease;
+  }
+  .btn-primary{
+    background:linear-gradient(120deg,var(--blue-700),var(--blue-500) 60%, var(--blue-400));
+    background-size:180% 180%;
+    color:#fff;
+    box-shadow:0 8px 24px rgba(61,123,255,0.35);
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 14px 30px rgba(61,123,255,0.45);
+    background-position:100% 0;
+  }
+  .btn-ghost{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.25);
+    color:#fff;
+  }
+  .btn-ghost:hover{
+    background:rgba(255,255,255,0.08);
+    transform:translateY(-2px);
+  }
+
+  .nav-cta{ display:flex; align-items:center; gap:14px; }
+  .burger{ display:none; }
+
+  /* ================= HERO ================= */
   .hero{
-    padding:190px 0 120px; position:relative; overflow:hidden;
+    position:relative;
+    background:radial-gradient(120% 120% at 20% -10%, #16265e 0%, #0a1330 45%, #070c22 100%);
+    color:#fff;
+    padding:190px 0 150px;
+    overflow:hidden;
+    isolation:isolate;
   }
-  .hero::before{
-    content:''; position:absolute; top:-180px; right:-160px; width:560px; height:560px; border-radius:50%;
-    background:radial-gradient(circle at 30% 30%, rgba(43,87,255,0.16), rgba(43,87,255,0) 70%);
+  .hero-spot{
+    position:absolute;
+    inset:0;
+    background:radial-gradient(560px 560px at var(--mx,70%) var(--my,20%), rgba(61,123,255,0.22), transparent 60%);
+    pointer-events:none;
+    transition:background .2s ease;
+    z-index:0;
   }
-  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:60px; align-items:center;}
-  .hero h1{font-size:clamp(38px,5vw,60px); font-weight:700;}
-  .hero p.lead{font-size:18px; max-width:520px;}
-  .hero-actions{display:flex; gap:16px; flex-wrap:wrap; margin-top:32px;}
+  .hero-ring{
+    position:absolute;
+    top:50%; right:-220px;
+    width:760px; height:760px;
+    transform:translateY(-50%);
+    z-index:0;
+    opacity:0.9;
+  }
+  .hero-ring svg{ width:100%; height:100%; animation:spin 40s linear infinite; }
+  .hero-ring .ring-2{
+    position:absolute; inset:60px;
+    animation:spin-rev 55s linear infinite;
+    opacity:.55;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  @keyframes spin-rev{ to{ transform:rotate(-360deg); } }
 
-  /* hero visual: floating document mockups */
-  .hero-visual{position:relative; height:460px;}
-  .doc-card{
-    position:absolute; background:var(--white); border-radius:var(--radius-md); box-shadow:var(--shadow);
-    padding:20px 22px; border:1px solid rgba(0,27,94,0.06);
+  .hero-blob{
+    position:absolute;
+    width:520px; height:520px;
+    border-radius:50%;
+    filter:blur(90px);
+    opacity:.35;
+    z-index:0;
+    animation:float 16s ease-in-out infinite;
   }
-  .doc-1{width:290px; top:0; left:10px; animation:float1 7s ease-in-out infinite;}
-  .doc-2{width:270px; top:150px; left:190px; animation:float2 8s ease-in-out infinite;}
-  .doc-3{width:250px; top:300px; left:20px; animation:float3 6.5s ease-in-out infinite;}
-  @keyframes float1{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-14px) rotate(-1deg);}}
-  @keyframes float2{0%,100%{transform:translateY(0) rotate(2deg);}50%{transform:translateY(12px) rotate(4deg);}}
-  @keyframes float3{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-10px) rotate(-4deg);}}
-  .doc-card .tag{font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-dark); margin-bottom:10px;}
-  .doc-line{height:8px; border-radius:4px; background:var(--bg); margin-bottom:8px;}
-  .doc-line.w1{width:92%;} .doc-line.w2{width:70%;} .doc-line.w3{width:82%;} .doc-line.w4{width:55%;}
-  .doc-card .doc-title{font-family:'Poppins'; font-weight:700; font-size:14px; margin-bottom:12px; color:var(--navy);}
-  .kpi-row{display:flex; justify-content:space-between; font-size:11.5px; padding:6px 0; border-bottom:1px dashed var(--line); color:var(--navy-soft);}
-  .kpi-row b{color:var(--navy);}
-  .flow-step{display:flex; align-items:center; gap:8px; font-size:11.5px; margin-bottom:8px; color:var(--navy-soft);}
-  .flow-dot{width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none;}
+  .blob-a{ background:#3d7bff; top:-140px; left:-160px; animation-delay:0s; }
+  .blob-b{ background:#1230c4; bottom:-200px; left:30%; animation-delay:-6s; }
+  @keyframes float{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(40px,-30px) scale(1.08); }
+  }
 
-  /* ---------- problem section ---------- */
-  .problem{background:var(--white);}
-  .problem-head{max-width:640px; margin:0 auto 56px; text-align:center;}
-  .problem-head h2{font-size:clamp(28px,3.4vw,40px);}
-  .problem-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
-  .problem-card{
-    background:var(--bg); border-radius:var(--radius-md); padding:28px 24px; border:1px solid transparent;
-    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  .hero-inner{ position:relative; z-index:2; max-width:680px; }
+  .hero h1{
+    font-size:clamp(40px,5.4vw,66px);
+    line-height:1.04;
+    font-weight:700;
+    margin-bottom:24px;
   }
-  .problem-card:hover{transform:translateY(-6px); box-shadow:var(--shadow-sm); border-color:rgba(43,87,255,0.18);}
-  .problem-card .num{font-family:'Poppins'; font-weight:700; color:var(--accent); font-size:13px; margin-bottom:12px;}
-  .problem-card p{margin:0; color:var(--navy); font-weight:500; font-size:15.5px;}
-  .problem-close{text-align:center; max-width:620px; margin:50px auto 0; font-size:17px; font-style:italic; color:var(--navy);}
+  .hero h1 .grad{
+    background:linear-gradient(100deg,var(--blue-400),#bcd4ff 45%, var(--blue-400));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p.lead{
+    font-size:18px;
+    line-height:1.65;
+    color:#b9c3ea;
+    max-width:520px;
+    margin-bottom:40px;
+  }
+  .hero-actions{ display:flex; gap:16px; margin-bottom:64px; flex-wrap:wrap; }
 
-  /* ---------- services preview ---------- */
-  .services-preview{background:var(--bg);}
-  .section-head{max-width:640px; margin:0 auto 56px; text-align:center;}
-  .section-head h2{font-size:clamp(28px,3.4vw,40px);}
-  .card-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
-  .service-card{
-    background:var(--white); border-radius:var(--radius-lg); padding:30px 26px; box-shadow:var(--shadow-sm);
-    transition:transform .35s ease, box-shadow .35s ease; position:relative; overflow:hidden;
+  .hero-stats{
+    display:flex;
+    gap:40px;
+    padding-top:32px;
+    border-top:1px solid var(--line-dark);
   }
-  .service-card::before{
-    content:''; position:absolute; inset:0; opacity:0; background:linear-gradient(135deg, rgba(43,87,255,0.06), transparent 60%);
-    transition:opacity .3s ease;
+  .hero-stats div{ min-width:110px; }
+  .hero-stats .num{
+    font-family:var(--font-mono);
+    font-size:26px;
+    font-weight:600;
+    color:#fff;
   }
-  .service-card:hover{transform:translateY(-8px); box-shadow:var(--shadow);}
-  .service-card:hover::before{opacity:1;}
-  .service-card h3{font-size:19px; margin-bottom:6px;}
-  .price{display:inline-block; font-weight:700; color:var(--accent-dark); font-size:15px; margin-bottom:14px;}
-  .service-card p{font-size:14.5px; margin-bottom:0;}
-  .center-btn{text-align:center; margin-top:46px;}
+  .hero-stats .lbl{
+    font-size:12px;
+    color:#8b97c4;
+    margin-top:4px;
+  }
 
-  /* what I do */
-  .whatido{background:var(--white);}
-  .whatido-inner{display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:center;}
-  .whatido h2{font-size:clamp(26px,3.2vw,36px);}
-  .compare{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
-  .compare-col{border-radius:var(--radius-md); padding:26px 22px;}
-  .compare-col.no{background:#f3eee7; border:1px solid #e3d9c8;}
-  .compare-col.yes{background:var(--navy); color:#fff;}
-  .compare-col h4{font-family:'Poppins'; font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:16px;}
-  .compare-col.no h4{color:#8a6a3a;}
-  .compare-col.yes h4{color:#9fb4ff;}
-  .compare-col ul{list-style:none; margin:0; padding:0;}
-  .compare-col li{font-size:14.5px; padding:8px 0 8px 22px; position:relative; color:var(--navy-soft);}
-  .compare-col.yes li{color:#e6ecf8;}
-  .compare-col.no li::before{content:'—'; position:absolute; left:0; color:#a98552;}
-  .compare-col.yes li::before{content:'✓'; position:absolute; left:0; color:#7fa0ff; font-weight:700;}
-
-  /* ---------- full services / pricing ---------- */
-  .services-full{background:var(--bg);}
-  .pricing-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
-  .pricing-card{
-    background:var(--white); border-radius:var(--radius-lg); padding:34px 30px; box-shadow:var(--shadow-sm);
-    transition:transform .3s ease, box-shadow .3s ease; display:flex; flex-direction:column;
+  .scroll-cue{
+    position:absolute;
+    left:32px; bottom:36px;
+    display:flex; align-items:center; gap:10px;
+    color:#7d8bc0;
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    z-index:2;
   }
-  .pricing-card:hover{transform:translateY(-6px); box-shadow:var(--shadow);}
-  .pricing-card.featured{
-    background:linear-gradient(160deg, var(--navy), #012a86); color:#fff; grid-column:span 2;
+  .scroll-cue .line{
+    width:1px; height:34px;
+    background:linear-gradient(#7d8bc0, transparent);
+    position:relative;
+    overflow:hidden;
+  }
+  .scroll-cue .line::after{
+    content:"";
+    position:absolute;
+    top:-100%; left:0; width:100%; height:100%;
+    background:linear-gradient(var(--blue-400), transparent);
+    animation:trickle 2.2s ease-in-out infinite;
+  }
+  @keyframes trickle{ to{ top:100%; } }
+
+  /* ================= SECTION SHELLS ================= */
+  section{ position:relative; padding:120px 0; }
+  section.alt{ background:var(--paper-2); }
+  section.dark{
+    background:radial-gradient(120% 100% at 80% 0%, #101c47, #070c22 60%);
+    color:#fff;
+  }
+
+  .section-head{
+    max-width:640px;
+    margin-bottom:64px;
+  }
+  .section-head h2{
+    font-size:clamp(28px,3.4vw,42px);
+    line-height:1.1;
+    margin-bottom:18px;
+  }
+  .section-head p{
+    font-size:16px;
+    color:var(--ink-soft);
+    line-height:1.7;
+  }
+  section.dark .section-head p{ color:#adb8e0; }
+
+  .mark{
+    width:20px; height:20px;
+    display:inline-block;
+  }
+
+  /* ================= INDEX / CONTENTS ================= */
+  .index-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:20px;
+  }
+  .index-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:34px 36px;
+    box-shadow:var(--shadow);
+  }
+  .index-card h3{
+    font-size:13px;
+    font-family:var(--font-mono);
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--blue-700);
+    margin-bottom:18px;
+    display:flex;
+    justify-content:space-between;
+  }
+  .toc-list{ list-style:none; margin:0; padding:0; }
+  .toc-list li{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    padding:9px 0;
+    border-bottom:1px dashed var(--line);
+    font-size:15px;
+    transform:translateX(-10px);
+    opacity:0;
+    transition:opacity .5s ease, transform .5s ease;
+    transition-delay:calc(var(--i, 0) * 45ms);
+  }
+  .toc-list.in li{ opacity:1; transform:translateX(0); }
+  .toc-list li:last-child{ border-bottom:none; }
+  .toc-list .dots{
+    flex:1;
+    border-bottom:1px dotted var(--line);
+    transform:translateY(-4px);
+  }
+  .toc-list .pg{
+    font-family:var(--font-mono);
+    color:var(--blue-500);
+    font-size:13px;
+  }
+  .toc-side{ display:flex; flex-direction:column; gap:20px; }
+  .toc-side .index-card{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .toc-side .toc-list li{ font-weight:600; }
+
+  /* ================= COMPLAINT CARDS ================= */
+  .complaints-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+  }
+  .flip-card{
+    perspective:1400px;
+    height:340px;
+  }
+  .flip-inner{
+    position:relative;
+    width:100%; height:100%;
+    transform-style:preserve-3d;
+    transition:transform .7s cubic-bezier(.2,.9,.3,1);
+  }
+  .flip-card:hover .flip-inner,
+  .flip-card:focus-within .flip-inner{ transform:rotateY(180deg); }
+  .flip-face{
+    position:absolute; inset:0;
+    -webkit-backface-visibility:hidden;
+    backface-visibility:hidden;
+    border-radius:22px;
+    padding:36px;
+    display:flex;
+    flex-direction:column;
+  }
+  .flip-front{
+    background:linear-gradient(160deg,#101c47,#0a1330);
+    color:#fff;
+    justify-content:space-between;
+    border:1px solid var(--line-dark);
+  }
+  .flip-front .quote-mark{ font-family:var(--font-display); font-size:60px; color:var(--blue-500); line-height:1; }
+  .flip-front blockquote{
+    font-family:var(--font-display);
+    font-size:24px;
+    font-weight:600;
+    line-height:1.3;
+    margin:14px 0 0;
+  }
+  .flip-front .tag{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--blue-400);
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .flip-hint{
+    font-size:12px;
+    color:#8b97c4;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .flip-hint svg{ animation:pulse-x 1.6s ease-in-out infinite; }
+  @keyframes pulse-x{ 0%,100%{ transform:translateX(0);} 50%{ transform:translateX(5px);} }
+
+  .flip-back{
+    background:#fff;
+    border:1px solid var(--line);
+    transform:rotateY(180deg);
+    box-shadow:var(--shadow);
+  }
+  .flip-back .row{ margin-bottom:16px; }
+  .flip-back .k{
+    font-family:var(--font-mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--blue-700);
+    margin-bottom:6px;
+    display:block;
+  }
+  .flip-back .v{ font-size:15px; color:var(--ink); line-height:1.5; }
+  .flip-back .v.note{ color:var(--ink-soft); font-style:italic; font-size:14px; }
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--paper-2);
+    border-radius:999px;
+    padding:5px 12px;
+    font-size:13px;
+    font-weight:600;
+  }
+  .pill.expect{ background:#fff0e4; color:#b8560f; }
+  .pill.reality{ background:#e6f6ec; color:#12833f; }
+
+  /* ================= DECISION POINTS ================= */
+  .decision-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+  }
+  .decision-card{
+    background:#fff;
+    border-radius:22px;
+    border:1px solid var(--line);
+    padding:32px;
+    box-shadow:var(--shadow);
+  }
+  .decision-card .dp-label{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--blue-500);
+    letter-spacing:.1em;
+    margin-bottom:8px;
+  }
+  .decision-card h4{
+    font-size:21px;
+    margin-bottom:22px;
+  }
+  .dp-row{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    align-items:center;
+    gap:16px;
+    padding:14px 0;
+    border-top:1px solid var(--line);
     position:relative;
   }
-  .pricing-card.featured::after{
-    content:'Most Complete'; position:absolute; top:24px; right:30px; background:var(--accent);
-    color:#fff; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
-    padding:7px 14px; border-radius:999px;
+  .dp-row:first-of-type{ border-top:none; }
+  .dp-row .sit{ font-size:14.5px; font-weight:600; color:var(--ink); position:relative; padding-left:16px; }
+  .dp-row .sit::before{
+    content:"";
+    position:absolute; left:0; top:6px;
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--blue-500);
   }
-  .pricing-card.featured h3, .pricing-card.featured .price{color:#fff;}
-  .pricing-card.featured p{color:#c9d5f5;}
-  .pricing-card.featured li{color:#dbe3fa;}
-  .pricing-card h3{font-size:21px; margin-bottom:4px;}
-  .pricing-card .price{font-size:16px; margin-bottom:8px;}
-  .pricing-card > p.desc{font-size:14.5px; margin-bottom:18px;}
-  .pricing-card ul{list-style:none; margin:0 0 22px; padding:0; flex:1;}
-  .pricing-card li{font-size:14px; padding:6px 0 6px 22px; position:relative; color:var(--navy-soft);}
-  .pricing-card li::before{content:'✓'; position:absolute; left:0; color:var(--accent); font-weight:700;}
-  .pricing-card .addon{font-size:12.5px; color:var(--navy-soft); font-style:italic; margin-bottom:16px;}
-  .pricing-note{text-align:center; font-size:13.5px; color:var(--navy-soft); margin-top:36px; font-style:italic;}
-  .custom-cta{
-    margin-top:24px; grid-column:span 2; background:var(--bg-alt); border-radius:var(--radius-lg);
-    padding:36px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
-    border:1px solid #e6dfd0;
+  .dp-row .act{
+    font-size:13.5px;
+    font-family:var(--font-mono);
+    padding:6px 12px;
+    border-radius:8px;
+    text-align:center;
+    background:var(--paper-2);
+    color:var(--ink-soft);
+    transform:scaleX(0.7);
+    opacity:0;
+    transform-origin:left;
+    transition:transform .5s ease, opacity .5s ease;
   }
-  .custom-cta h3{margin-bottom:6px; font-size:20px;}
-  .custom-cta p{margin:0; max-width:520px; font-size:14.5px;}
+  .in .dp-row .act{ transform:scaleX(1); opacity:1; }
+  .act.req{ background:#fff0e4; color:#b8560f; }
+  .act.yes{ background:#e6f6ec; color:#12833f; }
+  .act.review{ background:#eaf0ff; color:var(--blue-700); }
 
-  /* ---------- how it works ---------- */
-  .how{background:var(--white);}
-  .steps{display:grid; grid-template-columns:repeat(5,1fr); gap:18px; counter-reset:step;}
-  .step{position:relative; padding:26px 18px 20px; border-radius:var(--radius-md); background:var(--bg); text-align:left;
-        transition:transform .3s ease, background .3s ease;}
-  .step:hover{transform:translateY(-6px); background:#dbe6ee;}
-  .step .step-num{font-family:'Poppins'; font-weight:800; font-size:30px; color:var(--accent); opacity:.7; margin-bottom:14px;}
-  .step h4{font-size:16px; margin-bottom:8px;}
-  .step p{font-size:13.5px; margin:0;}
-  .steps-line{position:relative; height:2px; background:var(--line); margin-bottom:-2px;}
+  /* ================= REQUIRED INFO ================= */
+  .info-grid{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:60px;
+    align-items:start;
+  }
+  .check-list{ list-style:none; margin:0 0 28px; padding:0; }
+  .check-list li{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:12px 0;
+    font-size:15.5px;
+    font-weight:500;
+    border-bottom:1px solid var(--line);
+  }
+  .check-list li:last-child{ border:none; }
+  .check-list svg{ width:22px; height:22px; flex-shrink:0; }
+  .check-list svg path{
+    stroke-dasharray:40;
+    stroke-dashoffset:40;
+    transition:stroke-dashoffset .6s ease;
+  }
+  .in .check-list svg path{ stroke-dashoffset:0; }
 
-  /* ---------- coaching ---------- */
-  .coaching{background:var(--bg-alt);}
-  .coaching-inner{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
-  .coaching h2{font-size:clamp(26px,3.2vw,36px);}
-  .topics{display:flex; flex-wrap:wrap; gap:10px; margin:22px 0 0;}
-  .topic-pill{
-    font-size:13px; font-weight:600; padding:9px 16px; border-radius:999px; background:var(--white);
-    border:1px solid #e6dfd0; color:var(--navy); transition:transform .25s ease, background .25s ease;
+  .steps{ counter-reset:step; list-style:none; margin:0; padding:0; }
+  .steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 30px 52px;
+    font-size:15px;
+    color:var(--ink-soft);
+    line-height:1.5;
   }
-  .topic-pill:hover{transform:translateY(-3px); background:var(--navy); color:#fff;}
-  .process-col{background:var(--white); border-radius:var(--radius-lg); padding:30px; box-shadow:var(--shadow-sm);}
-  .process-block{margin-bottom:20px;}
-  .process-block:last-child{margin-bottom:0;}
-  .process-block h4{font-size:14px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent-dark); margin-bottom:8px;}
-  .process-block ul{margin:0; padding-left:18px; font-size:14px; color:var(--navy-soft);}
-  .process-block li{margin-bottom:4px;}
+  .steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0; top:-2px;
+    width:34px; height:34px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--blue-700),var(--blue-500));
+    color:#fff;
+    font-family:var(--font-mono);
+    font-weight:600;
+    font-size:14px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .steps li::after{
+    content:"";
+    position:absolute;
+    left:17px; top:34px; bottom:0;
+    width:1px;
+    background:var(--line);
+  }
+  .steps li:last-child::after{ display:none; }
+  .steps li strong{ display:block; color:var(--ink); font-size:15.5px; margin-bottom:2px; }
 
-  /* ---------- about ---------- */
-  .about{background:var(--white);}
-  .about-inner{display:grid; grid-template-columns:0.85fr 1.15fr; gap:56px; align-items:center;}
-  .about-photo{
-    aspect-ratio:4/5; border-radius:var(--radius-lg); background:linear-gradient(160deg,#dbe4ee,#c7d5e3);
-    display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; box-shadow:var(--shadow-sm);
+  .callout{
+    margin-top:8px;
+    background:#fff9ec;
+    border:1px solid #f3e2b3;
+    border-radius:14px;
+    padding:18px 20px;
+    font-size:14px;
+    color:#7a5b12;
+    display:flex;
+    gap:12px;
   }
-  .about-photo img{width:64px; height:64px; opacity:.5;}
-  .about-photo .ring{position:absolute; width:220px; height:220px; border-radius:50%; border:2px dashed rgba(0,27,94,0.18); animation:spin 30s linear infinite;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-  .about h2{font-size:clamp(26px,3.2vw,38px);}
-  .about .kicker{font-family:'Poppins'; font-weight:600; color:var(--accent-dark); margin-bottom:6px; font-size:14px;}
+  .callout svg{ flex-shrink:0; margin-top:2px; }
 
-  /* ---------- resources ---------- */
-  .resources{background:var(--bg);}
-  .res-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  .res-card{
-    background:var(--white); border-radius:var(--radius-md); padding:24px; box-shadow:var(--shadow-sm);
-    transition:transform .3s ease, box-shadow .3s ease; position:relative;
+  /* ================= EXCEPTIONS ================= */
+  .exceptions-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
   }
-  .res-card:hover{transform:translateY(-6px); box-shadow:var(--shadow);}
-  .res-tag{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--accent-dark); margin-bottom:10px; display:block;}
-  .res-card h4{font-size:16px; margin-bottom:0;}
-  .res-soon{
-    text-align:center; margin-top:44px; font-size:14px; color:var(--navy-soft); font-style:italic;
+  .exception-card{
+    background:#101c47;
+    border:1px solid var(--line-dark);
+    border-radius:20px;
+    padding:28px 24px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .4s cubic-bezier(.16,.84,.44,1), border-color .4s ease;
+  }
+  .exception-card::before{
+    content:"";
+    position:absolute; inset:-2px;
+    background:linear-gradient(135deg,var(--blue-500),transparent 60%);
+    opacity:0;
+    transition:opacity .4s ease;
+    z-index:0;
+    border-radius:20px;
+  }
+  .exception-card:hover{ transform:translateY(-8px); border-color:var(--blue-500); }
+  .exception-card:hover::before{ opacity:.18; }
+  .exception-card *{ position:relative; z-index:1; }
+  .exception-card .num{
+    font-family:var(--font-mono);
+    color:var(--blue-400);
+    font-size:12px;
+    margin-bottom:14px;
+    display:block;
+  }
+  .exception-card h4{ color:#fff; font-size:17px; margin-bottom:10px; line-height:1.3; }
+  .exception-card p{ color:#a9b4dd; font-size:13.6px; line-height:1.6; margin:0; }
+  .exception-card ul{ margin:12px 0 0; padding-left:18px; color:#c7d0f2; font-size:13.2px; line-height:1.7; }
+
+  /* ================= ESCALATION ================= */
+  .escalation-cats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-bottom:56px;
+  }
+  .cat-card{
+    background:#fff;
+    border-radius:18px;
+    border:1px solid var(--line);
+    padding:26px 22px;
+    box-shadow:var(--shadow);
+    position:relative;
+  }
+  .cat-card::before{
+    content:"";
+    position:absolute; top:0; left:22px; right:22px; height:3px;
+    border-radius:0 0 4px 4px;
+  }
+  .cat-financial::before{ background:var(--amber); }
+  .cat-technical::before{ background:var(--blue-500); }
+  .cat-operational::before{ background:var(--navy-600); }
+  .cat-customer::before{ background:var(--coral); }
+  .cat-card h4{ font-size:15.5px; margin:6px 0 14px; display:flex; align-items:center; gap:8px; }
+  .cat-card ul{ margin:0; padding-left:18px; font-size:13.5px; color:var(--ink-soft); line-height:1.75; }
+  .cat-icon{ width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:4px;}
+  .cat-financial .cat-icon{ background:#fff2df; color:#b8560f; }
+  .cat-technical .cat-icon{ background:#e8f0ff; color:var(--blue-700); }
+  .cat-operational .cat-icon{ background:#e6e9f5; color:var(--navy-700); }
+  .cat-customer .cat-icon{ background:#ffe9e4; color:#c73f28; }
+
+  .escalation-table{
+    background:#0a1330;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid var(--line-dark);
+  }
+  .et-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+  }
+  .et-row.head{ background:#070c22; }
+  .et-row.head div{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:#8b97c4;
+    padding:16px 30px;
+  }
+  .et-row:not(.head){
+    border-top:1px solid var(--line-dark);
+    transition:background .3s ease;
+  }
+  .et-row:not(.head):hover{ background:rgba(61,123,255,0.08); }
+  .et-row div{ padding:18px 30px; color:#e7ebfa; font-size:14.5px; }
+  .et-row div:first-child{ font-weight:600; color:#fff; }
+  .et-row div:last-child{ color:var(--blue-400); font-family:var(--font-mono); font-size:13.5px; }
+
+  /* ================= KPI ================= */
+  .kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+  }
+  .kpi-tile{
+    background:linear-gradient(160deg,#101c47,#0a1330);
+    border:1px solid var(--line-dark);
+    border-radius:20px;
+    padding:26px 24px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    min-height:168px;
+  }
+  .kpi-tile .kpi-name{
+    font-size:13px;
+    color:#a9b4dd;
+    line-height:1.4;
+    font-weight:500;
+  }
+  .kpi-tile .kpi-target{
+    font-family:var(--font-mono);
+    font-size:30px;
+    font-weight:600;
+    color:#fff;
+    margin-top:auto;
+  }
+  .kpi-tile .kpi-target sup{ font-size:14px; color:var(--blue-400); margin-left:4px; }
+  .kpi-track{
+    width:100%; height:5px;
+    background:rgba(255,255,255,0.08);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .kpi-track .fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--blue-700),var(--blue-400));
+    border-radius:4px;
+    transition:width 1.4s cubic-bezier(.16,.84,.44,1);
+  }
+  .kpi-tag{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--blue-400);
+    background:rgba(61,123,255,0.12);
+    align-self:flex-start;
+    padding:4px 10px;
+    border-radius:999px;
+    margin-top:auto;
   }
 
-  /* ---------- final cta ---------- */
-  .final-cta{
-    background:linear-gradient(135deg, var(--navy), #012a86); color:#fff; text-align:center; border-radius:var(--radius-lg);
-    margin:0 28px; padding:80px 40px; position:relative; overflow:hidden;
+  /* ================= CONTACT ================= */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:56px;
+    align-items:start;
   }
-  .final-cta::before{
-    content:''; position:absolute; width:500px; height:500px; border-radius:50%; top:-250px; right:-150px;
-    background:radial-gradient(circle, rgba(43,87,255,0.4), transparent 70%);
+  .contact-info h2{ font-size:34px; margin-bottom:18px; }
+  .contact-info p{ color:var(--ink-soft); font-size:15.5px; line-height:1.75; margin-bottom:32px; }
+  .contact-detail{ display:flex; gap:14px; align-items:flex-start; margin-bottom:22px; }
+  .contact-detail .ic{
+    width:38px; height:38px;
+    border-radius:10px;
+    background:#fff;
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    color:var(--blue-700);
   }
-  .final-cta h2{color:#fff; font-size:clamp(28px,3.6vw,42px); position:relative;}
-  .final-cta p{color:#c9d5f5; max-width:520px; margin:0 auto 30px; position:relative;}
-  .final-cta .btn-primary{position:relative;}
+  .contact-detail .t{ font-size:11px; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin-bottom:3px; }
+  .contact-detail .d{ font-size:14.5px; font-weight:600; }
 
-  /* ---------- contact ---------- */
-  .contact{background:var(--white);}
-  .contact-inner{display:grid; grid-template-columns:0.8fr 1.2fr; gap:56px;}
-  .contact h2{font-size:clamp(26px,3.2vw,38px);}
-  .contact-info-item{display:flex; gap:14px; margin-bottom:22px; align-items:flex-start;}
-  .contact-info-item .dot{width:10px; height:10px; border-radius:50%; background:var(--accent); margin-top:6px; flex:none;}
-  .contact-info-item h4{font-size:15px; margin-bottom:4px;}
-  .contact-info-item p{font-size:14px; margin:0;}
-  form.contact-form{background:var(--bg); border-radius:var(--radius-lg); padding:36px; box-shadow:var(--shadow-sm);}
-  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;}
-  .form-field{display:flex; flex-direction:column; gap:6px;}
-  .form-field.full{grid-column:1/-1;}
-  .form-field label{font-size:12.5px; font-weight:700; letter-spacing:.03em; color:var(--navy-soft); text-transform:uppercase;}
-  .form-field input, .form-field select, .form-field textarea{
-    font-family:'Inter'; font-size:14.5px; padding:12px 14px; border-radius:10px; border:1px solid var(--line);
-    background:var(--white); color:var(--navy); transition:border-color .25s ease, box-shadow .25s ease; outline:none;
+  .form-card{
+    background:#fff;
+    border-radius:24px;
+    border:1px solid var(--line);
+    box-shadow:var(--shadow);
+    padding:40px;
+    position:relative;
+    overflow:hidden;
   }
-  .form-field input:focus, .form-field select:focus, .form-field textarea:focus{
-    border-color:var(--accent); box-shadow:0 0 0 4px rgba(43,87,255,0.14);
+  .field{ position:relative; margin-bottom:24px; }
+  .field label{
+    position:absolute;
+    left:16px; top:16px;
+    font-size:15px;
+    color:#8992ab;
+    pointer-events:none;
+    transition:transform .25s ease, font-size .25s ease, color .25s ease, top .25s ease;
+    background:#fff;
+    padding:0 4px;
   }
-  .form-field textarea{resize:vertical; min-height:100px;}
-  .form-submit{display:flex; align-items:center; gap:16px; margin-top:8px;}
-  .form-note{font-size:12.5px; color:var(--navy-soft);}
-  .form-status{font-size:14px; font-weight:600; margin-top:14px; display:none;}
-  .form-status.show{display:block;}
-  .form-status.ok{color:#0a7a3d;}
-  .form-status.err{color:#b3261e;}
-  .btn-primary[disabled]{opacity:.65; cursor:progress; transform:none;}
+  .field input, .field select, .field textarea{
+    width:100%;
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:17px 16px 9px;
+    font-family:var(--font-body);
+    font-size:15px;
+    color:var(--ink);
+    background:#fff;
+    transition:border-color .25s ease, box-shadow .25s ease;
+  }
+  .field select{ padding:17px 16px 9px; appearance:none; }
+  .field textarea{ min-height:110px; resize:vertical; padding-top:20px; }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none;
+    border-color:var(--blue-500);
+    box-shadow:0 0 0 4px rgba(61,123,255,0.12);
+  }
+  .field input:focus + label,
+  .field input:not(:placeholder-shown) + label,
+  .field textarea:focus + label,
+  .field textarea:not(:placeholder-shown) + label,
+  .field select.filled + label{
+    top:-9px;
+    font-size:11px;
+    font-weight:600;
+    color:var(--blue-700);
+  }
+  .field .chevron{
+    position:absolute; right:16px; top:20px;
+    pointer-events:none; color:#8992ab;
+  }
 
-  /* ---------- footer ---------- */
-  footer{background:var(--navy); color:#c9d5f5; padding:60px 0 30px;}
-  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px;}
-  .footer-brand{display:flex; align-items:center; gap:10px; font-family:'Poppins'; font-weight:700; font-size:18px; color:#fff; margin-bottom:14px;}
-  .footer-brand img{width:30px; height:30px;}
-  footer p{color:#9fb0d9; font-size:13.5px;}
-  footer h5{font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:#7f94c8; margin-bottom:16px;}
-  footer ul{list-style:none; margin:0; padding:0;}
-  footer li{margin-bottom:10px;}
-  footer a{font-size:14px; color:#c9d5f5; text-decoration:none; transition:color .2s ease;}
-  footer a:hover{color:#fff;}
-  .social-row{display:flex; gap:12px; margin-top:6px;}
-  .social-row a{
-    width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,0.2);
-    display:flex; align-items:center; justify-content:center; font-size:13px; transition:background .25s ease, transform .25s ease;
+  .submit-btn{
+    width:100%;
+    justify-content:center;
+    padding:16px;
+    font-size:15px;
+    position:relative;
   }
-  .social-row a:hover{background:var(--accent); transform:translateY(-3px); border-color:var(--accent);}
-  .footer-bottom{border-top:1px solid rgba(255,255,255,0.12); padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
-  .footer-bottom p{margin:0; font-size:12.5px;}
+  .submit-btn .spinner{
+    width:16px; height:16px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,0.4);
+    border-top-color:#fff;
+    animation:spin .7s linear infinite;
+    display:none;
+  }
+  .submit-btn.loading .spinner{ display:inline-block; }
+  .submit-btn.loading .btn-text{ opacity:.6; }
 
-  /* ---------- responsive ---------- */
-  @media (max-width:1000px){
-    nav.links{display:none;}
-    .burger{display:flex;}
-    .hero-grid, .whatido-inner, .coaching-inner, .about-inner, .contact-inner{grid-template-columns:1fr;}
-    .problem-grid, .card-grid, .pricing-grid, .res-grid{grid-template-columns:repeat(2,1fr);}
-    .steps{grid-template-columns:repeat(2,1fr);}
-    .hero-visual{height:380px; margin-top:20px;}
-    .pricing-card.featured, .custom-cta{grid-column:span 2;}
-    .footer-grid{grid-template-columns:1fr 1fr;}
+  .form-status{
+    margin-top:16px;
+    font-size:13.5px;
+    display:none;
+    align-items:center;
+    gap:8px;
   }
-  @media (max-width:640px){
-    section{padding:80px 0;}
-    .problem-grid, .card-grid, .pricing-grid, .res-grid, .steps{grid-template-columns:1fr;}
-    .pricing-card.featured, .custom-cta{grid-column:span 1;}
-    .form-row{grid-template-columns:1fr;}
-    .footer-grid{grid-template-columns:1fr;}
-    .final-cta{margin:0 16px; padding:56px 24px;}
-    .custom-cta{flex-direction:column; align-items:flex-start;}
+  .form-status.error{ color:#c73f28; display:flex; }
+
+  .success-wrap{
+    position:absolute; inset:0;
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:40px;
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(16px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .success-wrap.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  .success-ring{
+    width:72px; height:72px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--blue-700),var(--blue-500));
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:22px;
+    position:relative;
+  }
+  .success-ring svg path{
+    stroke-dasharray:30;
+    stroke-dashoffset:30;
+    animation:draw .5s .3s ease forwards;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  .success-wrap h3{ font-size:21px; margin-bottom:8px; }
+  .success-wrap p{ color:var(--ink-soft); font-size:14.5px; max-width:280px; }
+  .confetti{
+    position:absolute;
+    width:8px; height:8px;
+    border-radius:2px;
+    top:50%; left:50%;
+    opacity:0;
+  }
+
+  /* ================= FOOTER ================= */
+  footer{
+    background:#070c22;
+    color:#8b97c4;
+    padding:56px 0 32px;
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-bottom:36px;
+    border-bottom:1px solid var(--line-dark);
+    margin-bottom:28px;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .footer-brand{ display:flex; align-items:center; gap:12px; }
+  .footer-brand img{ width:28px; height:28px; }
+  .footer-brand span{ color:#fff; font-family:var(--font-display); font-weight:700; font-size:16px; }
+  footer .fine{ font-size:12.5px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+  footer .fine a{ text-decoration:none; color:#8b97c4; }
+  footer .fine a:hover{ color:#fff; }
+
+  /* ================= responsive ================= */
+  @media (max-width: 980px){
+    nav.links{ display:none; }
+    .hero{ padding:150px 0 100px; }
+    .index-grid, .decision-grid, .info-grid, .contact-grid{ grid-template-columns:1fr; }
+    .complaints-grid{ grid-template-columns:1fr; }
+    .exceptions-grid{ grid-template-columns:1fr 1fr; }
+    .escalation-cats{ grid-template-columns:1fr 1fr; }
+    .kpi-grid{ grid-template-columns:1fr 1fr; }
+    .hero-ring{ opacity:.35; right:-320px; }
+  }
+  @media (max-width: 600px){
+    .wrap{ padding:0 20px; }
+    .exceptions-grid, .escalation-cats, .kpi-grid{ grid-template-columns:1fr; }
+    section{ padding:80px 0; }
+    .hero{ padding:130px 0 90px; }
+    .hero-stats{ gap:24px; flex-wrap:wrap; }
+    .form-card{ padding:26px; }
   }
 </style>
 </head>
 <body>
 
-<div class="scrim" id="scrim"></div>
-
-<header id="site-header">
+<header class="nav" id="siteNav">
   <div class="wrap nav-inner">
-    <a href="#hero" class="brand"><img src="assets/logo.png" alt="RugaOps logo"> RugaOps</a>
-    <nav class="links">
-      <a href="#hero">Home</a>
-      <a href="#services">Services</a>
-      <a href="#how-it-works">How It Works</a>
-      <a href="#resources">Resources</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <a href="#top" class="brand">
+      <img src="data:image/png;base64,__LOGO_B64__" alt="RugaOps logo" />
+      <span>
+        <span class="brand-name">RugaOps</span>
+        <span class="brand-tag">Operations Playbook</span>
+      </span>
+    </a>
+    <ul class="links" id="navLinks">
+      <li><a href="#index" data-nav>Playbook</a></li>
+      <li><a href="#complaints" data-nav>Complaints</a></li>
+      <li><a href="#decisions" data-nav>Decisions</a></li>
+      <li><a href="#escalation" data-nav>Escalation</a></li>
+      <li><a href="#kpi" data-nav>KPIs</a></li>
+    </ul>
     <div class="nav-cta">
-      <a href="#contact" class="btn btn-primary btn-sm">Book a Consultation</a>
-      <button class="burger" id="burger" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="#contact" class="btn btn-primary">Contact Ops</a>
     </div>
   </div>
 </header>
 
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#hero">Home</a>
-  <a href="#services">Services</a>
-  <a href="#how-it-works">How It Works</a>
-  <a href="#resources">Resources</a>
-  <a href="#about">About</a>
-  <a href="#contact">Contact</a>
-  <a href="#contact" class="btn btn-primary" style="margin-top:24px; width:100%; border:none;">Book a Consultation</a>
-</div>
+<main id="top">
 
-<!-- ================= HERO ================= -->
-<section class="hero" id="hero">
-  <div class="wrap hero-grid">
-    <div class="reveal in">
-      <div class="eyebrow">Customer Support Operations</div>
-      <h1>Turn Customer Support Into a System.</h1>
-      <p class="lead">RugaOps helps small businesses build clear customer support processes, practical SOPs, workflows, and documentation — so their teams can spend less time dealing with support chaos and more time solving customer problems.</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn btn-primary">Book a Consultation
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="#services" class="btn btn-ghost">View Services</a>
-      </div>
-    </div>
-    <div class="hero-visual reveal in">
-      <div class="doc-card doc-1">
-        <div class="tag">Standard Operating Procedure</div>
-        <div class="doc-title">Refund Processing</div>
-        <div class="doc-line w1"></div><div class="doc-line w2"></div><div class="doc-line w3"></div><div class="doc-line w4"></div>
-      </div>
-      <div class="doc-card doc-2">
-        <div class="tag">KPI Considerations</div>
-        <div class="kpi-row"><span>First Response Time</span><b>&lt;24h</b></div>
-        <div class="kpi-row"><span>CSAT</span><b>&gt;90%</b></div>
-        <div class="kpi-row"><span>Escalation Rate</span><b>&lt;10%</b></div>
-      </div>
-      <div class="doc-card doc-3">
-        <div class="tag">Escalation Workflow</div>
-        <div class="flow-step"><span class="flow-dot"></span>Ticket flagged</div>
-        <div class="flow-step"><span class="flow-dot"></span>Risk reviewed</div>
-        <div class="flow-step"><span class="flow-dot"></span>Routed to owner</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= PROBLEM ================= -->
-<section class="problem">
-  <div class="wrap">
-    <div class="problem-head reveal">
-      <div class="eyebrow" style="justify-content:center;">The Problem</div>
-      <h2>Is Your Customer Support Running on Improvisation?</h2>
-    </div>
-    <div class="problem-grid reveal-stagger reveal">
-      <div class="problem-card"><div class="num">01</div><p>Your team answers the same questions repeatedly.</p></div>
-      <div class="problem-card"><div class="num">02</div><p>Different employees handle the same issue differently.</p></div>
-      <div class="problem-card"><div class="num">03</div><p>Important processes aren't documented anywhere.</p></div>
-      <div class="problem-card"><div class="num">04</div><p>Nobody knows when an issue should be escalated.</p></div>
-      <div class="problem-card"><div class="num">05</div><p>Too many support tasks are still done manually.</p></div>
-      <div class="problem-card"><div class="num">06</div><p>Your process lives in people's heads, not in a system.</p></div>
-    </div>
-    <p class="problem-close reveal">These problems don't always require a bigger support team. Sometimes they require a better system.</p>
-  </div>
-</section>
-
-<!-- ================= SERVICES PREVIEW ================= -->
-<section class="services-preview">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow" style="justify-content:center;">Services</div>
-      <h2>How RugaOps Can Help</h2>
-    </div>
-    <div class="card-grid reveal-stagger reveal">
-      <div class="service-card">
-        <h3>Support Operations Coaching</h3>
-        <span class="price">€100 / session</span>
-        <p>One-on-one guidance for business owners and small support teams.</p>
-      </div>
-      <div class="service-card">
-        <h3>Support Process Audit</h3>
-        <span class="price">Starting at €250</span>
-        <p>Identify bottlenecks, repetitive work, missing processes, and improvement opportunities.</p>
-      </div>
-      <div class="service-card">
-        <h3>Support System Setup</h3>
-        <span class="price">Starting at €500</span>
-        <p>Create practical SOPs, workflows, escalation processes, and support documentation.</p>
-      </div>
-      <div class="service-card">
-        <h3>Knowledge Base Setup</h3>
-        <span class="price">Starting at €400</span>
-        <p>Organize internal support documentation and customer-facing FAQs.</p>
-      </div>
-      <div class="service-card">
-        <h3>Support Automation Roadmap</h3>
-        <span class="price">Starting at €350</span>
-        <p>Identify repetitive tasks and opportunities to simplify or automate support workflows.</p>
-      </div>
-      <div class="service-card">
-        <h3>Support Operations Makeover</h3>
-        <span class="price">Starting at €1,000</span>
-        <p>A comprehensive package for businesses that want to improve several areas of support at once.</p>
-      </div>
-    </div>
-    <div class="center-btn reveal"><a href="#services" class="btn btn-primary">View All Services &amp; Pricing</a></div>
-  </div>
-</section>
-
-<!-- ================= WHAT I DO ================= -->
-<section class="whatido">
-  <div class="wrap whatido-inner">
-    <div class="reveal">
-      <div class="eyebrow">The Approach</div>
-      <h2>I Don't Answer Your Customers. I Improve How Your Team Supports Them.</h2>
-      <p>RugaOps focuses on the systems behind customer service. Instead of becoming another person in your support inbox, I help businesses create clearer processes, better documentation, smarter workflows, and practical support systems.</p>
-    </div>
-    <div class="compare reveal">
-      <div class="compare-col no">
-        <h4>Not RugaOps</h4>
-        <ul>
-          <li>Frontline ticket answering</li>
-          <li>Call-center support</li>
-          <li>Daily customer email management</li>
-          <li>Outsourced customer service</li>
-        </ul>
-      </div>
-      <div class="compare-col yes">
-        <h4>RugaOps</h4>
-        <ul>
-          <li>Support process design</li>
-          <li>SOP creation</li>
-          <li>Workflow design</li>
-          <li>Documentation</li>
-          <li>Escalation systems</li>
-          <li>Automation planning</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= SERVICES FULL / PRICING ================= -->
-<section class="services-full" id="services">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow" style="justify-content:center;">Pricing</div>
-      <h2>Customer Support Systems That Make Work Easier</h2>
-      <p>Practical coaching, audits, and support-operation systems for small businesses, ecommerce brands, startups, and small support teams.</p>
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-spot" id="heroSpot"></div>
+    <div class="hero-blob blob-a"></div>
+    <div class="hero-blob blob-b"></div>
+    <div class="hero-ring" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="86" fill="none" stroke="url(#ringGrad)" stroke-width="1.4" stroke-dasharray="4 10" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#3d7bff"/>
+            <stop offset="100%" stop-color="#0a1330" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <svg class="ring-2" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="70" fill="none" stroke="#3d7bff" stroke-width="1" stroke-opacity="0.35" stroke-dasharray="1 8" stroke-linecap="round"/>
+      </svg>
     </div>
 
-    <div class="pricing-grid reveal-stagger reveal">
-      <div class="pricing-card">
-        <h3>1:1 Support Operations Coaching</h3>
-        <span class="price">€100 / session</span>
-        <p class="desc">For business owners or small support teams that need practical guidance but want to implement the changes themselves.</p>
-        <ul>
-          <li>60–90 minute online session</li>
-          <li>Review of current support challenges</li>
-          <li>Process, SOP, workflow &amp; escalation guidance</li>
-          <li>Automation opportunities</li>
-          <li>Written action plan after the session</li>
-        </ul>
-        <a href="#contact" class="btn btn-ghost btn-sm">Book a Coaching Session</a>
-      </div>
-
-      <div class="pricing-card">
-        <h3>Support Process Audit</h3>
-        <span class="price">Starting at €250</span>
-        <p class="desc">For businesses that aren't sure what is causing problems in their customer support operation.</p>
-        <ul>
-          <li>Workflows, ticket categories &amp; SOP review</li>
-          <li>Escalation process &amp; knowledge base review</li>
-          <li>Repetitive task &amp; automation opportunities</li>
-          <li>Support Improvement Roadmap with priorities</li>
-        </ul>
-        <a href="#contact" class="btn btn-ghost btn-sm">Request an Audit</a>
-      </div>
-
-      <div class="pricing-card">
-        <h3>Support System Setup</h3>
-        <span class="price">Starting at €500</span>
-        <p class="desc">For businesses that want RugaOps to help create their support documentation and processes.</p>
-        <ul>
-          <li>Support process review</li>
-          <li>Up to 3 custom SOPs</li>
-          <li>Workflow diagrams &amp; basic escalation process</li>
-          <li>Ticket categorization &amp; implementation guidance</li>
-        </ul>
-        <p class="addon">Additional SOPs: €75–€125 each, depending on complexity.</p>
-        <a href="#contact" class="btn btn-ghost btn-sm">Build My Support System</a>
-      </div>
-
-      <div class="pricing-card">
-        <h3>Knowledge Base Setup</h3>
-        <span class="price">Starting at €400</span>
-        <p class="desc">For businesses that want to organize internal support documentation or customer-facing FAQs.</p>
-        <ul>
-          <li>Knowledge base structure &amp; category organization</li>
-          <li>Up to 10 FAQ/support articles</li>
-          <li>Article templates &amp; content recommendations</li>
-          <li>Search/navigation recommendations</li>
-        </ul>
-        <p class="addon">Additional articles: €30–€60 each, depending on complexity.</p>
-        <a href="#contact" class="btn btn-ghost btn-sm">Build My Knowledge Base</a>
-      </div>
-
-      <div class="pricing-card">
-        <h3>Support Automation Roadmap</h3>
-        <span class="price">Starting at €350</span>
-        <p class="desc">For businesses that want to reduce repetitive manual support work.</p>
-        <ul>
-          <li>Review of current support processes</li>
-          <li>Identification of repetitive tasks</li>
-          <li>Recommended automation workflows &amp; tools</li>
-          <li>Prioritized implementation roadmap</li>
-        </ul>
-        <p class="addon">Technical implementation and complex integrations can be quoted separately.</p>
-        <a href="#contact" class="btn btn-ghost btn-sm">Plan My Automation</a>
-      </div>
-
-      <div class="pricing-card">
-        <h3>Ongoing Support Operations Advisory</h3>
-        <span class="price">Starting at €500 / month</span>
-        <p class="desc">For businesses that want continued guidance after their initial project.</p>
-        <ul>
-          <li>Monthly process &amp; KPI review</li>
-          <li>SOP updates &amp; new workflow development</li>
-          <li>Knowledge base updates</li>
-          <li>Monthly improvement meeting</li>
-        </ul>
-        <p class="addon">Exact monthly scope agreed based on your needs.</p>
-        <a href="#contact" class="btn btn-ghost btn-sm">Discuss Ongoing Support</a>
-      </div>
-
-      <div class="pricing-card featured">
-        <h3>Support Operations Makeover</h3>
-        <span class="price">Starting at €1,000</span>
-        <p class="desc">The RugaOps flagship service — for businesses that want help improving several areas of their support operation at once.</p>
-        <ul>
-          <li>Support process audit</li>
-          <li>Up to 5 custom SOPs</li>
-          <li>Workflow design &amp; escalation process</li>
-          <li>FAQ/knowledge base structure &amp; ticket categorization</li>
-          <li>Automation recommendations &amp; implementation roadmap</li>
-          <li>2 coaching sessions</li>
-        </ul>
-        <a href="#contact" class="btn btn-primary btn-sm" style="align-self:flex-start;">Book a Support Operations Consultation</a>
-      </div>
-
-      <div class="custom-cta">
-        <div>
-          <h3>Need Something More Specific?</h3>
-          <p>Every business has different support processes, tools, team sizes, and requirements. RugaOps can create a custom package around your business — from complete support department setups to large knowledge-base projects and long-term consulting.</p>
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="eyebrow">Support &amp; Fulfillment SOP</div>
+        <h1>Every judgment<br>call, <span class="grad">already made.</span></h1>
+        <p class="lead">The RugaOps playbook is where the support team goes before they refund, replace, escalate, or say no. One source, no guesswork, no two agents giving two answers.</p>
+        <div class="hero-actions">
+          <a href="#index" class="btn btn-primary">
+            Open the playbook
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost">Talk to Ops</a>
         </div>
-        <a href="#contact" class="btn btn-primary btn-sm">Request a Custom Quote</a>
-      </div>
-    </div>
-
-    <p class="pricing-note reveal">Prices shown are starting prices. Final pricing may vary depending on business size, number of processes, complexity, tools, and project requirements.</p>
-  </div>
-</section>
-
-<!-- ================= HOW IT WORKS ================= -->
-<section class="how" id="how-it-works">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow" style="justify-content:center;">Process</div>
-      <h2>From Support Chaos to a Clear System</h2>
-    </div>
-    <div class="steps reveal-stagger reveal">
-      <div class="step"><div class="step-num">01</div><h4>Discover</h4><p>Understand how your customer support currently works.</p></div>
-      <div class="step"><div class="step-num">02</div><h4>Diagnose</h4><p>Identify bottlenecks, repetitive work, missing processes, and areas for improvement.</p></div>
-      <div class="step"><div class="step-num">03</div><h4>Design</h4><p>Create SOPs, workflows, documentation, and support systems.</p></div>
-      <div class="step"><div class="step-num">04</div><h4>Implement</h4><p>Help the business put the new systems into practice.</p></div>
-      <div class="step"><div class="step-num">05</div><h4>Improve</h4><p>Identify opportunities to simplify, automate, and improve over time.</p></div>
-    </div>
-    <div class="center-btn reveal"><a href="#contact" class="btn btn-primary">Book a Consultation</a></div>
-  </div>
-</section>
-
-<!-- ================= COACHING ================= -->
-<section class="coaching">
-  <div class="wrap coaching-inner">
-    <div class="reveal">
-      <div class="eyebrow">Coaching</div>
-      <h2>Support Operations Coaching</h2>
-      <p>Practical one-on-one guidance for business owners and small teams who want to organize their customer support without hiring a full-time support operations manager.</p>
-      <div class="topics">
-        <span class="topic-pill">Support workflows</span>
-        <span class="topic-pill">SOPs</span>
-        <span class="topic-pill">Ticket categories</span>
-        <span class="topic-pill">Escalation processes</span>
-        <span class="topic-pill">FAQs</span>
-        <span class="topic-pill">Knowledge bases</span>
-        <span class="topic-pill">Support KPIs</span>
-        <span class="topic-pill">Automation opportunities</span>
-      </div>
-      <div style="margin-top:30px;"><a href="#contact" class="btn btn-primary">Book a Coaching Session — €100</a></div>
-    </div>
-    <div class="process-col reveal">
-      <div class="process-block">
-        <h4>Before the session</h4>
-        <ul>
-          <li>Current support process</li>
-          <li>Common customer issues</li>
-          <li>Existing documentation &amp; tools</li>
-          <li>Biggest support challenges</li>
-        </ul>
-      </div>
-      <div class="process-block">
-        <h4>During the session</h4>
-        <ul>
-          <li>Identify problems &amp; map processes</li>
-          <li>Prioritize improvements</li>
-          <li>Design solutions</li>
-          <li>Answer questions</li>
-        </ul>
-      </div>
-      <div class="process-block">
-        <h4>After the session</h4>
-        <ul>
-          <li>Recommendations &amp; action items</li>
-          <li>Practical next steps</li>
-          <li>Process guidance where applicable</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= ABOUT ================= -->
-<section class="about" id="about">
-  <div class="wrap about-inner">
-    <div class="about-photo reveal">
-      <div class="ring"></div>
-      <img src="assets/logo.png" alt="RugaOps">
-    </div>
-    <div class="reveal">
-      <div class="kicker">About RugaOps</div>
-      <h2>Hi, I'm Noémi.</h2>
-      <p>My background in customer support gave me firsthand experience with the everyday problems that can make support complicated — repetitive requests, unclear processes, inconsistent handling, and situations where the right process isn't always obvious.</p>
-      <p>I created RugaOps to focus on the part of customer support that often gets overlooked: the system behind the conversations.</p>
-      <p>My goal is to help small businesses create clearer processes, better documentation, practical workflows, and support systems that make everyday work easier.</p>
-      <a href="#contact" class="btn btn-ghost">Book a Consultation</a>
-    </div>
-  </div>
-</section>
-
-<!-- ================= RESOURCES ================= -->
-<section class="resources" id="resources">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow" style="justify-content:center;">Resources</div>
-      <h2>From the Blog — Coming Soon</h2>
-      <p>Practical articles on customer support operations, SOPs, workflows, and automation.</p>
-    </div>
-    <div class="res-grid reveal-stagger reveal">
-      <div class="res-card"><span class="res-tag">Fundamentals</span><h4>What Is Customer Support Operations?</h4></div>
-      <div class="res-card"><span class="res-tag">SOPs</span><h4>Why Small Businesses Need Support SOPs</h4></div>
-      <div class="res-card"><span class="res-tag">SOPs</span><h4>How to Create a Refund SOP</h4></div>
-      <div class="res-card"><span class="res-tag">Workflows</span><h4>How to Build a Customer Support Workflow</h4></div>
-      <div class="res-card"><span class="res-tag">Efficiency</span><h4>How to Reduce Repetitive Support Tickets</h4></div>
-      <div class="res-card"><span class="res-tag">Automation</span><h4>What Customer Support Tasks Should Be Automated?</h4></div>
-      <div class="res-card"><span class="res-tag">Knowledge Base</span><h4>How to Build an Ecommerce Knowledge Base</h4></div>
-      <div class="res-card"><span class="res-tag">Fundamentals</span><h4>Customer Service vs. Customer Support Operations</h4></div>
-      <div class="res-card"><span class="res-tag">Escalation</span><h4>How to Create a Support Escalation Process</h4></div>
-    </div>
-    <p class="res-soon reveal">New articles publishing soon. Want a heads-up when they're live? <a href="#contact" style="color:var(--accent-dark); font-weight:600;">Get in touch</a>.</p>
-  </div>
-</section>
-
-<!-- ================= FINAL CTA ================= -->
-<section style="padding:0 0 120px;">
-  <div class="final-cta reveal">
-    <h2>Ready to Build a Better Support System?</h2>
-    <p>Let's identify what's slowing your support operation down and create a practical plan to improve it.</p>
-    <a href="#contact" class="btn btn-primary">Book a Consultation</a>
-  </div>
-</section>
-
-<!-- ================= CONTACT ================= -->
-<section class="contact" id="contact">
-  <div class="wrap contact-inner">
-    <div class="reveal">
-      <div class="eyebrow">Contact</div>
-      <h2>Let's Talk About Your Support Operation.</h2>
-      <p>Tell me what's currently happening in your customer support operation and where you're struggling. We'll identify where you can start improving.</p>
-
-      <div class="contact-info-item">
-        <span class="dot"></span>
-        <div><h4>Book directly</h4><p>Prefer to skip the form? Book a consultation slot straight into the calendar.</p></div>
-      </div>
-      <div class="contact-info-item">
-        <span class="dot"></span>
-        <div><h4>Response time</h4><p>Every inquiry gets a reply within 1–2 business days.</p></div>
-      </div>
-      <a href="#contact" class="btn btn-primary">Book a Consultation</a>
-    </div>
-
-    <div>
-      <form class="contact-form reveal" id="contactForm" action="https://formspree.io/f/xdenoodl" method="POST">
-        <div class="form-row">
-          <div class="form-field">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
+        <div class="hero-stats">
+          <div>
+            <div class="num">&lt;24h</div>
+            <div class="lbl">First response target</div>
           </div>
-          <div class="form-field">
-            <label for="business">Business name</label>
-            <input type="text" id="business" name="business">
+          <div>
+            <div class="num">4</div>
+            <div class="lbl">Escalation categories</div>
+          </div>
+          <div>
+            <div class="num">36pg</div>
+            <div class="lbl">Full SOP document</div>
           </div>
         </div>
-        <div class="form-row">
-          <div class="form-field">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          <div class="form-field">
-            <label for="website">Website</label>
-            <input type="text" id="website" name="website" placeholder="optional">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-field">
-            <label for="business_type">Business type</label>
-            <select id="business_type" name="business_type">
-              <option value="">Select one</option>
-              <option>Ecommerce</option>
-              <option>Startup</option>
-              <option>Small business</option>
-              <option>Small support team</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <label for="team_size">Support team size</label>
-            <select id="team_size" name="team_size">
-              <option value="">Select one</option>
-              <option>Just me</option>
-              <option>2–5</option>
-              <option>6–15</option>
-              <option>16+</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-field full">
-            <label for="challenge">Biggest support challenge</label>
-            <textarea id="challenge" name="challenge" rows="3"></textarea>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-field full">
-            <label for="help">What would you like help with?</label>
-            <textarea id="help" name="help" rows="3" required></textarea>
-          </div>
-        </div>
-        <div class="form-submit">
-          <button type="submit" class="btn btn-primary" id="submitBtn">Submit
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <span class="form-note">We'll never share your information.</span>
-        </div>
-        <div class="form-status" id="formStatus"></div>
-      </form>
+      </div>
     </div>
-  </div>
-</section>
 
-<!-- ================= FOOTER ================= -->
+    <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
+  </section>
+
+  <!-- ============ INDEX / TOC ============ -->
+  <section id="index">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">What's inside</div>
+        <h2>One document, every scenario a claim can take.</h2>
+        <p>The full Standard Operating Procedure runs 36 pages. This site surfaces the sections agents reach for most — complaints, decisions, evidence, exceptions, escalation, and KPIs.</p>
+      </div>
+
+      <div class="index-grid">
+        <div class="index-card reveal">
+          <h3>Standard Operating Procedure <span>pg. 3</span></h3>
+          <ul class="toc-list" id="tocMain">
+            <li style="--i:0"><span>Purpose</span><span class="dots"></span></li>
+            <li style="--i:1"><span>Scope</span><span class="dots"></span></li>
+            <li style="--i:2"><span>Responsibilities</span><span class="dots"></span></li>
+            <li style="--i:3"><span>Definitions</span><span class="dots"></span></li>
+            <li style="--i:4"><span>Service Level Targets</span><span class="dots"></span></li>
+            <li style="--i:5"><span>Step-by-Step Procedure</span><span class="dots"></span></li>
+            <li style="--i:6"><span>Decision Points</span><span class="dots"></span></li>
+            <li style="--i:7"><span>Partial Cancellation Procedure</span><span class="dots"></span></li>
+            <li style="--i:8"><span>Refund Processing</span><span class="dots"></span></li>
+            <li style="--i:9"><span>Escalation Rules</span><span class="dots"></span></li>
+            <li style="--i:10"><span>Exceptions</span><span class="dots"></span></li>
+            <li style="--i:11"><span>Documentation Requirements</span><span class="dots"></span></li>
+            <li style="--i:12"><span>Customer Communication Templates</span><span class="dots"></span></li>
+            <li style="--i:13"><span>KPI Considerations</span><span class="dots"></span></li>
+            <li style="--i:14"><span>Additional Steps</span><span class="dots"></span></li>
+            <li style="--i:15"><span>Operational Risks</span><span class="dots"></span></li>
+            <li style="--i:16"><span>Common Customer Complaints</span><span class="dots"></span></li>
+            <li style="--i:17"><span>Opportunities for Automation</span><span class="dots"></span></li>
+          </ul>
+        </div>
+
+        <div class="toc-side">
+          <div class="index-card reveal">
+            <h3>Reference sections</h3>
+            <ul class="toc-list" id="tocSide">
+              <li style="--i:0"><span>FAQ Articles</span><span class="dots"></span><span class="pg">28</span></li>
+              <li style="--i:1"><span>Order Cancellation Checklist</span><span class="dots"></span><span class="pg">30</span></li>
+              <li style="--i:2"><span>Ticket Category Structure</span><span class="dots"></span><span class="pg">32</span></li>
+              <li style="--i:3"><span>Escalation Matrix</span><span class="dots"></span><span class="pg">34</span></li>
+              <li style="--i:4"><span>Improvements</span><span class="dots"></span><span class="pg">36</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPLAINTS ============ -->
+  <section class="alt" id="complaints">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Common Customer Complaints</div>
+        <h2>The complaints agents should expect most often.</h2>
+        <p>Hover a card to see how expectation and reality differ — and the language to bridge them.</p>
+      </div>
+
+      <div class="complaints-grid">
+        <div class="flip-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-face flip-front">
+              <div>
+                <span class="quote-mark">&ldquo;</span>
+                <blockquote>Tracking says delivered but nothing is here.</blockquote>
+              </div>
+              <div>
+                <div class="tag">Most common scenario</div>
+                <div class="flip-hint">See how we respond
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="flip-face flip-back">
+              <div class="row">
+                <span class="k">Customer expectation</span>
+                <span class="pill expect">Immediate replacement</span>
+              </div>
+              <div class="row">
+                <span class="k">Business reality</span>
+                <span class="pill reality">Investigation first</span>
+              </div>
+              <div class="row">
+                <span class="k">Handling note</span>
+                <span class="v">Requires careful communication — the gap between what's expected and what's required is where most escalations start.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-face flip-front">
+              <div>
+                <span class="quote-mark">&ldquo;</span>
+                <blockquote>Why do I have to wait 48 hours?</blockquote>
+              </div>
+              <div>
+                <div class="tag">Delivery-scan confusion</div>
+                <div class="flip-hint">See how we respond
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="flip-face flip-back">
+              <div class="row">
+                <span class="k">Why it happens</span>
+                <span class="v">Customers often believe delivery scans are final.</span>
+              </div>
+              <div class="row">
+                <span class="k">Canned explanation</span>
+                <span class="v">&ldquo;Carriers occasionally scan packages before final delivery. Many packages arrive within 24&ndash;48 hours.&rdquo;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DECISION POINTS ============ -->
+  <section id="decisions">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Decision Points</div>
+        <h2>Two questions, every time.</h2>
+        <p>Before a case closes, agents work through evidence and return requirements in that order.</p>
+      </div>
+
+      <div class="decision-grid">
+        <div class="decision-card reveal">
+          <div class="dp-label">DECISION POINT 1</div>
+          <h4>Is evidence required?</h4>
+          <div class="dp-row"><span class="sit">Low-value order</span><span class="act">Agent discretion</span></div>
+          <div class="dp-row"><span class="sit">Clear fulfillment error</span><span class="act">May waive evidence</span></div>
+          <div class="dp-row"><span class="sit">High-value order</span><span class="act req">Evidence required</span></div>
+          <div class="dp-row"><span class="sit">Repeat claimant</span><span class="act req">Evidence required</span></div>
+        </div>
+
+        <div class="decision-card reveal" style="--d:120ms">
+          <div class="dp-label">DECISION POINT 2</div>
+          <h4>Is return required?</h4>
+          <div class="dp-row"><span class="sit">Low-value item</span><span class="act">Usually no</span></div>
+          <div class="dp-row"><span class="sit">High-value item</span><span class="act yes">Usually yes</span></div>
+          <div class="dp-row"><span class="sit">Customized item</span><span class="act review">Manager review</span></div>
+          <div class="dp-row"><span class="sit">Hygiene-sensitive item</span><span class="act">Usually no</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REQUIRED INFO ============ -->
+  <section class="alt" id="required-info">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Required Information from Customer</div>
+        <h2>Collect this before resolving the case.</h2>
+      </div>
+
+      <div class="info-grid">
+        <div class="reveal">
+          <h4 style="margin-bottom:16px;font-size:15px;">Mandatory</h4>
+          <ul class="check-list">
+            <li>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#e6f6ec"/><path d="M7 12.5l3 3 7-7" stroke="#12833f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Order number
+            </li>
+            <li>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#e6f6ec"/><path d="M7 12.5l3 3 7-7" stroke="#12833f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Customer email address
+            </li>
+            <li>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#e6f6ec"/><path d="M7 12.5l3 3 7-7" stroke="#12833f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Description of issue
+            </li>
+          </ul>
+
+          <div class="callout">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#b8560f" stroke-width="1.6"/><path d="M12 8v5M12 16h.01" stroke="#b8560f" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <span>For low-value items, agents may skip photo requirements at their discretion if the claim appears credible.</span>
+          </div>
+        </div>
+
+        <div class="reveal" style="--d:120ms">
+          <h4 style="margin-bottom:16px;font-size:15px;">Evidence requested — customer should provide</h4>
+          <ol class="steps">
+            <li><strong>Photo of the item received</strong>Confirms condition and contents against the order.</li>
+            <li><strong>Photo of packaging</strong>If available — helps identify shipping or handling damage.</li>
+            <li><strong>Photo of SKU / barcode label</strong>If applicable — verifies the correct item was sent.</li>
+            <li><strong>Photo of packing slip</strong>If included — cross-references order details.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXCEPTIONS ============ -->
+  <section class="dark" id="exceptions">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Exceptions</div>
+        <h2>Situations that call for case-by-case review.</h2>
+      </div>
+
+      <div class="exceptions-grid">
+        <div class="exception-card reveal">
+          <span class="num">01</span>
+          <h4>Limited Evidence</h4>
+          <p>When customers cannot provide photos due to disposal or accessibility issues.</p>
+          <ul>
+            <li>One-time courtesy replacement</li>
+            <li>Partial refund</li>
+            <li>Manager review</li>
+          </ul>
+        </div>
+        <div class="exception-card reveal" style="--d:100ms">
+          <span class="num">02</span>
+          <h4>Seasonal Peak Periods</h4>
+          <p>During holiday seasons, reporting windows may be extended.</p>
+        </div>
+        <div class="exception-card reveal" style="--d:200ms">
+          <span class="num">03</span>
+          <h4>VIP or High‑Lifetime‑Value Customers</h4>
+          <p>Management may approve exceptions to preserve customer relationships.</p>
+        </div>
+        <div class="exception-card reveal" style="--d:300ms">
+          <span class="num">04</span>
+          <h4>International Shipments</h4>
+          <p>Additional transit-related damage reviews may be required depending on carrier claims processes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ESCALATION ============ -->
+  <section id="escalation">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Escalation Rules</div>
+        <h2>Escalate to a Team Lead or Manager when&hellip;</h2>
+      </div>
+
+      <div class="escalation-cats">
+        <div class="cat-card cat-financial reveal">
+          <div class="cat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h4>Financial Risk</h4>
+          <ul>
+            <li>Refund exceeds predefined threshold (e.g., $500)</li>
+            <li>Multiple cancellation requests from same customer</li>
+            <li>Suspected fraud</li>
+          </ul>
+        </div>
+        <div class="cat-card cat-technical reveal" style="--d:80ms">
+          <div class="cat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 3L5 7l4 4M15 3l4 4-4 4M13 21l-2-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h4>Technical Issues</h4>
+          <ul>
+            <li>Store errors</li>
+            <li>Payment gateway discrepancies</li>
+            <li>Refund processing failures</li>
+          </ul>
+        </div>
+        <div class="cat-card cat-operational reveal" style="--d:160ms">
+          <div class="cat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 7l9-4 9 4-9 4-9-4zm0 5l9 4 9-4M3 17l9 4 9-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h4>Operational Issues</h4>
+          <ul>
+            <li>Warehouse dispute</li>
+            <li>Shipment interception required</li>
+            <li>Inventory discrepancies</li>
+          </ul>
+        </div>
+        <div class="cat-card cat-customer reveal" style="--d:240ms">
+          <div class="cat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0112 6a5.5 5.5 0 019.5 6c-2.5 4.5-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h4>Customer Risk</h4>
+          <ul>
+            <li>VIP customer</li>
+            <li>Public complaint on social media</li>
+            <li>Threatened chargeback</li>
+            <li>Threatened legal action</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="escalation-table reveal">
+        <div class="et-row head"><div>Issue type</div><div>Escalate to</div></div>
+        <div class="et-row"><div>Refund exception</div><div>Operations Manager</div></div>
+        <div class="et-row"><div>Fraud concern</div><div>Operations Manager</div></div>
+        <div class="et-row"><div>VIP customer</div><div>Support Lead</div></div>
+        <div class="et-row"><div>Technical issue</div><div>Ecommerce / Technical Owner</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KPI ============ -->
+  <section class="dark" id="kpi">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">KPI Considerations</div>
+        <h2>Tracked monthly, no exceptions.</h2>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-tile reveal" data-target="24">
+          <div class="kpi-name">First Response Time</div>
+          <div class="kpi-target"><span class="count">0</span><sup>&lt; business hrs</sup></div>
+          <div class="kpi-track"><div class="fill" data-w="80"></div></div>
+        </div>
+        <div class="kpi-tile reveal" style="--d:60ms" data-target="3">
+          <div class="kpi-name">Damage Claim Resolution Time</div>
+          <div class="kpi-target"><span class="count">0</span><sup>&lt; business days</sup></div>
+          <div class="kpi-track"><div class="fill" data-w="60"></div></div>
+        </div>
+        <div class="kpi-tile reveal" style="--d:120ms" data-target="90">
+          <div class="kpi-name">Customer Satisfaction (CSAT)</div>
+          <div class="kpi-target"><span class="count">0</span><sup>% &gt;</sup></div>
+          <div class="kpi-track"><div class="fill" data-w="90"></div></div>
+        </div>
+        <div class="kpi-tile reveal" style="--d:180ms" data-target="1">
+          <div class="kpi-name">Replacement Processing Time</div>
+          <div class="kpi-target"><span class="count">0</span><sup>&lt; business day</sup></div>
+          <div class="kpi-track"><div class="fill" data-w="45"></div></div>
+        </div>
+        <div class="kpi-tile reveal" data-target="1">
+          <div class="kpi-name">Refund Processing Time</div>
+          <div class="kpi-target"><span class="count">0</span><sup>&lt; business day</sup></div>
+          <div class="kpi-track"><div class="fill" data-w="45"></div></div>
+        </div>
+        <div class="kpi-tile reveal" style="--d:60ms">
+          <div class="kpi-name">Damage Claim Rate</div>
+          <div class="kpi-tag">Monitor by SKU</div>
+        </div>
+        <div class="kpi-tile reveal" style="--d:120ms">
+          <div class="kpi-name">Repeat Damage Incidents</div>
+          <div class="kpi-tag">Decreasing trend</div>
+        </div>
+        <div class="kpi-tile reveal" style="--d:180ms" data-target="10">
+          <div class="kpi-name">Escalation Rate</div>
+          <div class="kpi-target"><span class="count">0</span><sup>% of claims &lt;</sup></div>
+          <div class="kpi-track"><div class="fill" data-w="20"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="alt" id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <div class="eyebrow">Get in touch</div>
+          <h2>Can't find the answer in the playbook?</h2>
+          <p>Send it to the Ops team directly. Escalations, edge cases, and playbook corrections all land in the same queue and get triaged same-day.</p>
+
+          <div class="contact-detail">
+            <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/></svg></div>
+            <div>
+              <div class="t">Response time</div>
+              <div class="d">Under 24 business hours</div>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0112 6a5.5 5.5 0 019.5 6c-2.5 4.5-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div>
+              <div class="t">Best for</div>
+              <div class="d">Escalations &amp; playbook feedback</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card reveal" style="--d:100ms">
+          <form id="opsForm">
+            <div class="field">
+              <input type="text" id="name" name="name" placeholder=" " required />
+              <label for="name">Full name</label>
+            </div>
+            <div class="field">
+              <input type="email" id="email" name="email" placeholder=" " required />
+              <label for="email">Email address</label>
+            </div>
+            <div class="field">
+              <select id="topic" name="topic" required>
+                <option value="" disabled selected hidden></option>
+                <option value="Damage claim / escalation">Damage claim / escalation</option>
+                <option value="Refund or cancellation">Refund or cancellation</option>
+                <option value="Playbook correction">Playbook correction</option>
+                <option value="Other">Other</option>
+              </select>
+              <label for="topic">Topic</label>
+              <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="field">
+              <textarea id="message" name="message" placeholder=" " required></textarea>
+              <label for="message">Message</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">
+              <span class="spinner"></span>
+              <span class="btn-text">Send to Ops</span>
+            </button>
+            <div class="form-status" id="formStatus"></div>
+          </form>
+
+          <div class="success-wrap" id="successWrap">
+            <div class="success-ring">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Message sent</h3>
+            <p>The Ops team has it — expect a reply within 24 business hours.</p>
+            <a href="#top" class="btn btn-ghost" style="color:var(--ink);border-color:var(--line);margin-top:22px;" id="resetForm">Back to top</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
 <footer>
   <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand"><img src="assets/logo.png" alt="RugaOps"> RugaOps</div>
-        <p>Customer support operations coaching &amp; consulting for small businesses, ecommerce brands, startups, and small support teams.</p>
-        <div class="social-row">
-          <a href="#" aria-label="LinkedIn">in</a>
-          <a href="#" aria-label="Instagram">ig</a>
-          <a href="#" aria-label="Email">@</a>
-        </div>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="data:image/png;base64,__LOGO_B64__" alt="RugaOps logo" />
+        <span>RugaOps</span>
       </div>
-      <div>
-        <h5>Site</h5>
-        <ul>
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#how-it-works">How It Works</a></li>
-          <li><a href="#resources">Resources</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5>Company</h5>
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#contact">Book a Consultation</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5>Flagship</h5>
-        <ul>
-          <li><a href="#services">Support Operations Makeover</a></li>
-          <li><a href="#services">Custom Projects</a></li>
-        </ul>
-      </div>
+      <nav.links style="display:flex;gap:28px;">
+        <a href="#index" style="color:#8b97c4;text-decoration:none;font-size:13.5px;">Playbook</a>
+        <a href="#escalation" style="color:#8b97c4;text-decoration:none;font-size:13.5px;">Escalation</a>
+        <a href="#kpi" style="color:#8b97c4;text-decoration:none;font-size:13.5px;">KPIs</a>
+        <a href="#contact" style="color:#8b97c4;text-decoration:none;font-size:13.5px;">Contact</a>
+      </nav.links>
     </div>
-    <div class="footer-bottom">
-      <p>© 2026 RugaOps. All rights reserved.</p>
-      <p>Sofia, Bulgaria — working with clients worldwide.</p>
+    <div class="fine">
+      <span>&copy; 2026 RugaOps. Internal operations reference.</span>
+      <span>Standard Operating Procedure — v2026</span>
     </div>
   </div>
 </footer>
 
 <script>
-  // ---------- header scroll state ----------
-  const header = document.getElementById('site-header');
-  window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive:true });
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---------- mobile menu ----------
-  const burger = document.getElementById('burger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const scrim = document.getElementById('scrim');
-  function toggleMenu(open){
-    mobileMenu.classList.toggle('open', open);
-    scrim.classList.toggle('open', open);
+  /* ---- Nav scroll state ---- */
+  var nav = document.getElementById('siteNav');
+  function onScroll(){
+    if(window.scrollY > 40){ nav.classList.add('scrolled'); }
+    else{ nav.classList.remove('scrolled'); }
   }
-  burger.addEventListener('click', () => toggleMenu(!mobileMenu.classList.contains('open')));
-  scrim.addEventListener('click', () => toggleMenu(false));
-  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+  document.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
 
-  // ---------- scroll reveal ----------
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting){
+  /* ---- Active nav link on scroll ---- */
+  var navLinks = document.querySelectorAll('#navLinks a');
+  var sections = Array.prototype.map.call(navLinks, function(a){
+    return document.querySelector(a.getAttribute('href'));
+  });
+  function setActive(){
+    var pos = window.scrollY + 140;
+    var current = 0;
+    sections.forEach(function(sec, i){
+      if(sec && sec.offsetTop <= pos) current = i;
+    });
+    navLinks.forEach(function(a, i){
+      a.classList.toggle('active', i === current);
+    });
+  }
+  document.addEventListener('scroll', setActive, { passive:true });
+  setActive();
+
+  /* ---- Hero cursor spotlight ---- */
+  var hero = document.getElementById('hero');
+  var spot = document.getElementById('heroSpot');
+  if(hero && !reduceMotion){
+    hero.addEventListener('mousemove', function(e){
+      var r = hero.getBoundingClientRect();
+      var x = ((e.clientX - r.left) / r.width) * 100;
+      var y = ((e.clientY - r.top) / r.height) * 100;
+      spot.style.setProperty('--mx', x + '%');
+      spot.style.setProperty('--my', y + '%');
+    });
+  }
+
+  /* ---- Scroll reveal ---- */
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
         entry.target.classList.add('in');
         io.unobserve(entry.target);
       }
     });
-  }, { threshold:0.15 });
-  revealEls.forEach(el => io.observe(el));
+  }, { threshold:0.15, rootMargin:'0px 0px -60px 0px' });
+  revealEls.forEach(function(el){ io.observe(el); });
 
-  // ---------- contact form (Formspree AJAX) ----------
-  const form = document.getElementById('contactForm');
-  const submitBtn = document.getElementById('submitBtn');
-  const status = document.getElementById('formStatus');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    submitBtn.disabled = true;
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = 'Sending…';
-    status.className = 'form-status';
-    status.textContent = '';
-
-    try {
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
+  /* ---- TOC list stagger trigger ---- */
+  ['tocMain','tocSide'].forEach(function(id){
+    var list = document.getElementById(id);
+    if(!list) return;
+    var io2 = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          list.classList.add('in');
+          io2.unobserve(entry.target);
+        }
       });
+    }, { threshold:0.2 });
+    io2.observe(list);
+  });
 
-      if (response.ok) {
-        status.textContent = "Thanks — your message has been sent. We'll be in touch within 1–2 business days.";
-        status.className = 'form-status show ok';
+  /* ---- KPI count-up + bar fill ---- */
+  var kpiTiles = document.querySelectorAll('.kpi-tile[data-target]');
+  var kpiIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      kpiIO.unobserve(entry.target);
+      var tile = entry.target;
+      var target = parseInt(tile.getAttribute('data-target'), 10);
+      var countEl = tile.querySelector('.count');
+      var fillEl = tile.querySelector('.fill');
+      if(fillEl){ requestAnimationFrame(function(){ fillEl.style.width = fillEl.getAttribute('data-w') + '%'; }); }
+      if(reduceMotion){ countEl.textContent = target; return; }
+      var start = null;
+      var dur = 1100;
+      function step(ts){
+        if(!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        countEl.textContent = Math.round(eased * target);
+        if(p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }, { threshold:0.4 });
+  kpiTiles.forEach(function(t){ kpiIO.observe(t); });
+
+  /* ---- Select "filled" state for floating label ---- */
+  var topicSelect = document.getElementById('topic');
+  if(topicSelect){
+    topicSelect.addEventListener('change', function(){
+      topicSelect.classList.toggle('filled', !!topicSelect.value);
+    });
+  }
+
+  /* ---- Formspree submit via fetch (no reload) ---- */
+  var form = document.getElementById('opsForm');
+  var submitBtn = document.getElementById('submitBtn');
+  var statusEl = document.getElementById('formStatus');
+  var successWrap = document.getElementById('successWrap');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    statusEl.className = 'form-status';
+    statusEl.textContent = '';
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+
+    var data = new FormData(form);
+
+    fetch('https://formspree.io/f/xdenoodl', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: data
+    }).then(function(response){
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
+      if(response.ok){
+        successWrap.classList.add('show');
+        launchConfetti();
         form.reset();
       } else {
-        const data = await response.json().catch(() => null);
-        const msg = data && data.errors ? data.errors.map(er => er.message).join(', ') : 'Something went wrong. Please try again.';
-        status.textContent = msg;
-        status.className = 'form-status show err';
+        return response.json().then(function(json){
+          var msg = (json && json.errors && json.errors.length)
+            ? json.errors.map(function(er){ return er.message; }).join(', ')
+            : 'Something went wrong. Please try again.';
+          throw new Error(msg);
+        });
       }
-    } catch (err) {
-      status.textContent = 'Network error — please try again or email us directly.';
-      status.className = 'form-status show err';
-    } finally {
+    }).catch(function(err){
+      submitBtn.classList.remove('loading');
       submitBtn.disabled = false;
-      submitBtn.innerHTML = originalText;
-    }
+      statusEl.classList.add('error');
+      statusEl.textContent = err.message || 'Could not send — check your connection and try again.';
+    });
   });
+
+  var resetLink = document.getElementById('resetForm');
+  if(resetLink){
+    resetLink.addEventListener('click', function(){
+      setTimeout(function(){ successWrap.classList.remove('show'); }, 600);
+    });
+  }
+
+  function launchConfetti(){
+    if(reduceMotion) return;
+    var colors = ['#3d7bff','#1230c4','#ffb020','#2fd07b','#6fa8ff'];
+    var host = successWrap;
+    for(var i=0;i<26;i++){
+      var el = document.createElement('div');
+      el.className = 'confetti';
+      el.style.background = colors[i % colors.length];
+      var angle = Math.random() * Math.PI * 2;
+      var dist = 90 + Math.random()*120;
+      var tx = Math.cos(angle) * dist;
+      var ty = Math.sin(angle) * dist - 40;
+      el.style.transform = 'translate(-50%,-50%)';
+      el.animate([
+        { transform:'translate(-50%,-50%) rotate(0deg)', opacity:1 },
+        { transform:'translate(calc(-50% + ' + tx + 'px), calc(-50% + ' + ty + 'px)) rotate(' + (Math.random()*360) + 'deg)', opacity:0 }
+      ], { duration: 900 + Math.random()*500, easing:'cubic-bezier(.16,.84,.44,1)' });
+      host.appendChild(el);
+      (function(node){ setTimeout(function(){ node.remove(); }, 1500); })(el);
+    }
+  }
+
+  /* ---- Smooth scroll for in-page anchors ---- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if(id.length > 1){
+        var target = document.querySelector(id);
+        if(target){
+          e.preventDefault();
+          window.scrollTo({ top: target.offsetTop - 70, behavior: reduceMotion ? 'auto' : 'smooth' });
+        }
+      }
+    });
+  });
+})();
 </script>
 
 </body>
